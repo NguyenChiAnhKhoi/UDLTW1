@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('ncak_post', function (Blueprint $table) {
+        Schema::create('post', function (Blueprint $table) {
             $table->id(); //id
             $table->unsignedInteger('topic_id')->nullable();
             $table->string('title', 1000);
@@ -20,11 +20,10 @@ return new class extends Migration
             $table->string('image', 1000);
             $table->enum('type', ['post', 'page']);
             $table->text('description')->nullable();
-            $table->unsignedInteger('created_by');
+            $table->unsignedInteger('created_by')->default(1);
             $table->unsignedInteger('updated_by')->default();
             $table->timestamps(); //created_at   updated_at
             $table->unsignedTinyInteger('status')->default(2);
-
         });
     }
 
@@ -33,6 +32,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('ncak_post');
+        Schema::dropIfExists('post');
     }
 };
