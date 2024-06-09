@@ -88,7 +88,7 @@
                             </ul>
                         </li>
                         <li class="nav-item">
-                            <a href="#" class="nav-link">
+                            <a href="" class="nav-link">
                                 <i class="nav-icon fas fa-copy"></i>
                                 <p>
                                     Bài viết
@@ -97,13 +97,13 @@
                             </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
-                                    <a href="../layout/top-nav.html" class="nav-link">
+                                    <a href="post" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Tất cả bài viết</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="../layout/top-nav-sidebar.html" class="nav-link">
+                                    <a href="topic" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Chủ đề</p>
                                     </a>
@@ -117,7 +117,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="admin/contact" class="nav-link">
+                            <a href="contact" class="nav-link">
                                 <i class="fas fa-id-card"></i>
                                 <p>Liên hệ</p>
                             </a>
@@ -155,7 +155,7 @@
                             </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
-                                    <a href="../tables/simple.html" class="nav-link">
+                                    <a href="user" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Tất cả thành viên</p>
                                     </a>

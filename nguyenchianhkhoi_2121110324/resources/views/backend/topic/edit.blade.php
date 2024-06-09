@@ -1,7 +1,5 @@
 @extends('layouts.admin')
-@section('title')
-    Bảng Topic
-@endsection
+@section('title', 'Topic')
 @section('content')
 <div class="content-wrapper">
     <section class="content-header">
@@ -45,11 +43,12 @@
                         </ul>
                       </div>
                       @endif --}}
-                        <form action="{{ route('admin.topic.store') }}" method="post">
+                        <form action="{{ route('admin.topic.update',['id'=>$topic->id]) }}" method="post">
                             @csrf
+                            @method('PUT')
                             <div class="mb-3">
                                 <label for="name">Tên topic</label>
-                                <input type="text" value="{{ old('name') }}" name="name" id="name"
+                                <input type="text" value="{{ old('name', $topic->name) }}" name="name" id="name"
                                     class="form-control">
                                 @error('name')
                                     {{ $message }}
@@ -57,8 +56,7 @@
                             </div>
                             <div class="mb-3">
                                 <label for="description">Mô tả</label>
-                                <textarea name="description" id="description" rows="3" class="form-control">
-                                {{ old('description') }}
+                                <textarea name="description" id="description" rows="3" class="form-control">{{ old('description', $topic->description) }}
                               </textarea>
                             </div>
                             <div class="mb-3">
@@ -82,57 +80,9 @@
                             </div>
                         </form>
                     </div>
-                    <div class="col-md-8">
-                        <table class="table table-bordered table-hover table-stripes">
-                            <theader>
-                                <tr>
-                                    <th class="text-center" style="width:30px">#</th>
-                                    <th class="text-center" style="width:90px">Hình</th>
-                                    <th>Tên topic</th>
-                                    <th>Slug</th>
-                                    <th class="text-center" style="width:190px">Chức năng</th>
-                                    <th class="text-center" style="width:30px">ID</th>
-                                </tr>
-                            </theader>
-                            <tbody>
-                                @foreach ($list as $row)
-                                    <tr>
-                                        <th class="text-center">
-                                            <input type="checkbox">
-                                        </th>
-                                        <th class="text-center">
-                                            <img src="{{ asset('assets/images/categorys/' . $row->image) }}"
-                                                class="img-fluid" alt="{{ $row->image }}">
-                                        </th>
-                                        <th>{{ $row->name }}</th>
-                                        <th>{{ $row->slug }}</th>
-                                        <th class="text-center">
-                                            <a href="#" class="btn btn-sm btn-success">
-                                                <i class="fa fa-toggle-on" aria-hidden="true"></i>
-                                            </a>
-                                            <a href="{{ route('admin.topic.show', ['id' => $row->id]) }}"
-                                                class="btn btn-sm btn-info">
-                                                <i class="fa fa-eye" aria-hidden="true"></i>
-                                            </a>
-                                            <a href="{{ route('admin.topic.edit', ['id' => $row->id]) }}" class="btn btn-sm btn-primary">
-                                                <i class="fa fa-edit" aria-hidden="true"></i>
-                                            </a>
-                                            <a href="#" class="btn btn-sm btn-danger">
-                                                <i class="fa fa-trash" aria-hidden="true"></i>
-                                            </a>
-
-                                        </th>
-                                        <th class="text-center">{{ $row->id }}</th>
-                                    </tr>
-                                @endforeach
-
-                            </tbody>
-                        </table>
-
-                    </div>
                 </div>
             </div>
         </div>
+        </div>
     </section>
-                      </div>    
 @endsection

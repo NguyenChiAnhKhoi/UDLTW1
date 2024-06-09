@@ -1,12 +1,12 @@
 @extends('layouts.admin')
-@section('title', 'Category')
+@section('title', 'Post')
 @section('content')
     <div class="content-wrapper">
         <section class="content-header">
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-12">
-                        <h1 class="d-inline">Tất cả danh mục</h1>
+                        <h1 class="d-inline">Tất cả bài Post</h1>
                     </div>
                 </div>
             </div>
@@ -17,7 +17,7 @@
                 <div class="card-header text-right">
                     <button class="btn btn-sm btn-success">
                         <i class="fa fa-solid fa-plus"></i>
-                        Thêm sản phẩm
+                        Thêm Post
                     </button>
                     <button class="btn btn-sm btn-success">
                         <i class="fa fa-save" aria-hidden="true"></i>
@@ -27,37 +27,47 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-md-4">
-                            <form action="{{ route('admin.category.store') }}" enctype="multipart/form-data" method="post">
+                            <form action="{{ route('admin.post.store') }}" enctype="multipart/form-data" method="post">
                                 @csrf
-
                                 <div class="mb-3">
-                                    <label>Tên danh mục (*)</label>
-                                    <input type="text" name="name" id="name" placeholder="Nhập tên danh mục"
-                                        class="form-control" value="{{ old('name') }}">
-                                    @error('name')
+                                    <label>Tên bài viết (*)</label>
+                                    <input type="text" name="title" id="title" placeholder="Nhập tiêu đề"
+                                        class="form-control" value="{{ old('title') }}">
+                                    @error('title')
                                         {{ $message }}
                                     @enderror
                                 </div>
                                 <div class="mb-3">
-                                    <label>Danh mục cha (*)</label>
-                                    <select name="parent_id" class="form-control">
-                                        <option value="0">None</option>
-                                        {!! $htmlparentId !!}
+                                    <label>Topic (*)</label>
+                                    <select name="topic_id" class="form-control">
+                                        <option value="">Chọn Topic</option>
+                                        @foreach ($topics as $id => $name)
+                                            <option value="{{ $id }}">{{ $name }}</option>
+                                        @endforeach
                                     </select>
                                 </div>
+
                                 <div class="mb-3">
-                                    <label>Mô tả (*)</label>
-                                    <textarea rows="3" name="description" id="description" placeholder="Nhập mô tả danh mục" class="form-control" value="{{ old('description') }}"></textarea>
+                                    <label>Chi tiết (*)</label>
+                                    <textarea rows="3" name="detail" id="detail" placeholder="Nhập chi tiết sản phẩm" class="form-control"></textarea>
                                 </div>
+                                {{-- <div class="mb-3">
+                                    <label>Slug (*)</label>
+                                    <textarea rows="3" name="slug" id="slug" placeholder="Nhập mô tả danh mục" class="form-control"></textarea>
+                                </div> --}}
                                 <div class="mb-3">
                                     <label>Hình đại diện</label>
                                     <input type="file" name="image" class="form-control">
                                 </div>
                                 <div class="mb-3">
-                                    <label>Sắp xếp</label>
-                                    <select name="sort_order" class="form-control">
-                                        <option value="0">Chọn vị trí</option>
-                                        {!! $htmlsortOrder !!}
+                                    <label>Mô tả (*)</label>
+                                    <textarea rows="3" name="description" id="description" placeholder="Nhập mô tả danh mục" class="form-control"></textarea>
+                                </div>
+                                <div class="mb-3">
+                                    <label>Định dạng</label>
+                                    <select name="type" class="form-control">
+                                        <option value="page">Trang</option>
+                                        <option value="post">Bài</option>
                                     </select>
                                 </div>
                                 <div class="mb-3">
@@ -73,7 +83,6 @@
                                         Lưu
                                     </button>
                                 </div>
-
                             </form>
                         </div>
                         <div class="col-md-8">
@@ -84,10 +93,10 @@
                                             <input type="checkbox">
                                         </th>
                                         <th class="text-center" style="width:130px;">Hình ảnh</th>
-                                        <th>Tên danh mục</th>
+                                        <th>Tên bài viết</th>
                                         <th>Tên slug</th>
                                         <th class="text-center" style="width:190px;">Chức năng</th>
-                                        <th class="text-center">ID</th>
+                                        <th class="text-center" >ID</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -96,28 +105,27 @@
                                             <td>
                                                 <input type="checkbox">
                                             </td>
-                                            <td class="text-center">
-                                                <img src="{{ asset('/images/categorys/' . $row->image) }}"
+                                            <td>
+                                                <img src="{{ asset('/images/posts/' . $row->image) }}"
                                                     alt="category.jpg" style="width:80px">
                                             </td>
                                             <td>
-                                                <div class="name">
-                                                    {{ $row->name }}
+                                                <div class="title">
+                                                    {{ $row->title }}
                                                 </div>
                                             </td>
                                             <td> {{ $row->slug }}</td>
-                                            </td>
                                             @php
-                                                $args=['id'=>$row->id];
-                                            @endphp
-                                            <td class="text-center">
+                                            $args=['id'=>$row->id];
+                                        @endphp
+                                            <td>
                                                 <a href="#" class="btn btn-sm btn-success">
                                                     <i class="fa fa-toggle-on" aria-hidden="true"></i>
                                                 </a>
                                                 <a href="#" class="btn btn-sm btn-info">
                                                     <i class="fa fa-eye" aria-hidden="true"></i>
                                                 </a>
-                                                <a href="{{ route('admin.category.edit',$args) }}" class="btn btn-sm btn-primary">
+                                                <a href="{{ route('admin.post.edit',$args) }}" class="btn btn-sm btn-primary">
                                                     <i class="fa fa-edit" aria-hidden="true"></i>
                                                 </a>
                                                 <a href="#" class="btn btn-sm btn-danger">
@@ -129,9 +137,6 @@
                                 </tbody>
                             </table>
                         </div>
-                    </div>
-                </div>
-            </div>
         </section>
     </div>
 

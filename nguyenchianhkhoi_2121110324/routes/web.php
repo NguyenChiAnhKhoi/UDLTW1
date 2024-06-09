@@ -15,6 +15,8 @@ use App\Http\Controllers\backend\BrandController;
 use App\Http\Controllers\backend\BannerController;
 use App\Http\Controllers\backend\MenuController;
 use App\Http\Controllers\backend\OrderController;
+use App\Http\Controllers\backend\UserController;
+use App\Http\Controllers\backend\PostController;
 
 
 Route::get('/', [HomeController::class, 'index'])->name('site.home');
@@ -52,6 +54,19 @@ Route::prefix("admin")->group(function () {
     Route::get('delete/{id}', [CategoryController::class, 'delete'])->name('admin.category.delete');
     Route::get('restore/{id}', [CategoryController::class, 'restore'])->name('admin.category.restore');
     Route::get('destroy/{id}', [CategoryController::class, 'destroy'])->name('admin.category.destroy');
+});
+//User
+Route::prefix("user")->group(function () {
+    Route::get('/', [UserController::class, 'index'])->name('admin.user.index');
+    Route::get('trash', [UserController::class, 'trash'])->name('admin.user.trash');
+    Route::get('show/{id}', [UserController::class, 'show'])->name('admin.user.show');
+    Route::get('create', [UserController::class, 'create'])->name('admin.user.store');
+    Route::post('store', [UserController::class, 'store'])->name('admin.user.store');
+    Route::get('edit/{id}', [UserController::class, 'edit'])->name('admin.user.edit');
+    Route::put('update/{id}', [UserController::class, 'update'])->name('admin.user.update');
+    Route::get('delete/{id}', [UserController::class, 'delete'])->name('admin.user.delete');
+    Route::get('restore/{id}', [UserController::class, 'restore'])->name('admin.user.restore');
+    Route::get('destroy/{id}', [UserController::class, 'destroy'])->name('admin.user.destroy');
 });
 
   //Brand
@@ -135,4 +150,18 @@ Route::prefix("admin")->group(function () {
         Route::get('restore/{id}', [ContactController::class, 'restore'])->name('admin.contact.restore');
         Route::get('destroy/{id}', [ContactController::class, 'destroy'])->name('admin.contact.destroy');
     });
+
+        //Post
+        Route::prefix("post")->group(function () {
+            Route::get('/', [PostController::class, 'index'])->name('admin.post.index');
+            Route::get('trash', [PostController::class, 'trash'])->name('admin.post.trash');
+            Route::get('show/{id}', [PostController::class, 'show'])->name('admin.post.show');
+            Route::get('create', [PostController::class, 'create'])->name('admin.post.store');
+            Route::post('store', [PostController::class, 'store'])->name('admin.post.store');
+            Route::get('edit/{id}', [PostController::class, 'edit'])->name('admin.post.edit');
+            Route::put('update/{id}', [PostController::class, 'update'])->name('admin.post.update');
+            Route::get('delete/{id}', [PostController::class, 'delete'])->name('admin.post.delete');
+            Route::get('restore/{id}', [PostController::class, 'restore'])->name('admin.post.restore');
+            Route::get('destroy/{id}', [PostController::class, 'destroy'])->name('admin.post.destroy');
+        });
 });
