@@ -6,6 +6,7 @@ use App\Http\Controllers\frontend\HomeController;
 use App\Http\Controllers\frontend\ProductController as SanPhamController;
 use App\Http\Controllers\frontend\ContactController as LienheController;
 use App\Http\Controllers\frontend\CartController;
+use App\Http\Controllers\AuthController;
 // Admin
 use App\Http\Controllers\backend\DashboardController;
 use App\Http\Controllers\backend\ProductController;
@@ -34,12 +35,20 @@ Route::get('gio-hang', [CartController::class, 'index'])->name('site.cart.index'
 Route::get('cart/addcart', [CartController::class, 'addcart'])->name('site.cart.addcart');
 Route::post('cart/update', [CartController::class, 'update'])->name('site.cart.update');
 Route::get('cart/delete/{id}', [CartController::class, 'delete'])->name('site.cart.delete');
-
+Route::get('thanh-toan', [CartController::class, 'checkout'])->name('site.cart.checkout');
 
 Route::get('lien-he', [ContactController::class, 'index'])->name('site.contact');
 
+
+
+
+Route::get('dang-nhap', [AuthController::class, 'getlogin'])->name('website.getlogin');
+Route::post('dang-nhap', [AuthController::class, 'dologin'])->name('website.doLogin');
+Route::get('dang-xuat', [AuthController::class, 'logout'])->name('website.logout');
+
+
 // Admin
-Route::prefix("admin")->group(function () {
+Route::prefix("admin")->middleware("middleauth")->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('admin.dashboard.index');
 
     //Product

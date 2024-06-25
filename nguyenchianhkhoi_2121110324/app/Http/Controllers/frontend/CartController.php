@@ -86,4 +86,9 @@ class CartController extends Controller
         session(['carts'=>$carts]);
         return redirect()->route('site.cart.index');
     }
+    public function checkout()
+    {
+        $list_cart = session('carts',[]);
+        return view("frontend.checkout", compact('list_cart'));
+    }
 }

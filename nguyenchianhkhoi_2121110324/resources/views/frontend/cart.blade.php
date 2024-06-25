@@ -47,7 +47,7 @@
                     <th colspan="4">
                         <a class="btn btn-success px-3" href="{{route('site.home')}}">Mua thêm</a>
                         <button type="submit" class="btn btn-primary px-3">Cập nhật</button>
-                        <a class="btn btn-info px-3" href="#">Thanh toán</a>
+                        <a class="btn btn-info px-3" href="{{route('site.cart.checkout')}}">Thanh toán</a>
 
                     </th>
                     <th colspan="3" class="text-end">

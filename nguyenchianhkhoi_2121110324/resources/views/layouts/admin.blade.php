@@ -34,7 +34,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">
+                    <a class="nav-link" href="{{route('website.logout')}}">
                         <i class="fas fa-power-off"></i> Thoát
                     </a>
                 </li>
