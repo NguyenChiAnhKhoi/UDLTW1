@@ -1,8 +1,6 @@
 @extends('layouts.site')
 @section('title', 'Tất cả sản phẩm')
-@section('header')
-<link rel="stylesheet" href="product.css">
-@endsection
+
 @section('content')
 <div class="container-fluid pt-5">
     <div class="row px-xl-5">

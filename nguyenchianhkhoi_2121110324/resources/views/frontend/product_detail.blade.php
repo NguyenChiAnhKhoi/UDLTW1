@@ -95,20 +95,8 @@
                 </form>
             </div>
             <div class="d-flex align-items-center mb-4 pt-2">
-                <div class="input-group quantity mr-3" style="width: 130px;">
-                    <div class="input-group-btn">
-                        <button class="btn btn-primary btn-minus" >
-                        <i class="fa fa-minus"></i>
-                        </button>
-                    </div>
-                    <input type="text" class="form-control bg-secondary text-center" value="1">
-                    <div class="input-group-btn">
-                        <button class="btn btn-primary btn-plus">
-                            <i class="fa fa-plus"></i>
-                        </button>
-                    </div>
-                </div>
-                <button onclick="handleAddCart()"> Add To Cart</button>
+                <input type="number" value="1" min="0" aria-describedby="basic-addon2" id="qty">
+                <button onclick="handleAddCart({{$product->id}})"> Add To Cart</button>
                 <i class="fa fa-shopping-cart mr-1"></i>
             </div>
             <div class="d-flex pt-2">
@@ -263,13 +251,32 @@
     </div>
 </div>
 <!-- Products End -->
+
+<script>
+    function handleAddCart(productid)
+    {
+        let qty = document.getElementById("qty").value;
+      $.ajax({
+        url:"{{  route('site.cart.addcart')  }}",
+        type:"GET",
+        data:{
+            productid:productid,
+            qty:qty
+        },
+        success:function(result,status,xhr){
+            document.getElementById("showqty").innerHTML=result;
+            alert("Thêm vào giỏ hàng thành công");
+        },
+        error:function(xhr,status,error)
+        {
+            alert(error);
+        }
+      })
+    }
+ </script>
+
+
 @endsection
 
-@section('footer')
- <div>
-    aaaaa
-
- </div>
-@endsection
 
 

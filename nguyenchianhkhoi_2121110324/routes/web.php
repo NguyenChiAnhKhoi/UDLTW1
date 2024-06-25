@@ -4,7 +4,8 @@ use Illuminate\Support\Facades\Route;
 // Site
 use App\Http\Controllers\frontend\HomeController;
 use App\Http\Controllers\frontend\ProductController as SanPhamController;
-
+use App\Http\Controllers\frontend\ContactController as LienheController;
+use App\Http\Controllers\frontend\CartController;
 // Admin
 use App\Http\Controllers\backend\DashboardController;
 use App\Http\Controllers\backend\ProductController;
@@ -28,6 +29,11 @@ Route::get('danh-muc/{slug}', [SanPhamController::class, 'category'])->name('sit
 //product detail
 Route::get('chi-tiet-san-pham/{slug}', [SanPhamController::class, 'detail'])->name('site.product.detail');
 
+//cart
+Route::get('gio-hang', [CartController::class, 'index'])->name('site.cart.index');
+Route::get('cart/addcart', [CartController::class, 'addcart'])->name('site.cart.addcart');
+Route::post('cart/update', [CartController::class, 'update'])->name('site.cart.update');
+Route::get('cart/delete/{id}', [CartController::class, 'delete'])->name('site.cart.delete');
 
 
 Route::get('lien-he', [ContactController::class, 'index'])->name('site.contact');
