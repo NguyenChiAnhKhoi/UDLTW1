@@ -20,8 +20,16 @@ use App\Http\Controllers\backend\PostController;
 
 
 Route::get('/', [HomeController::class, 'index'])->name('site.home');
+//Product All
 Route::get('san-pham', [SanPhamController::class, 'index'])->name('site.product');
+
+//Product Category
+Route::get('danh-muc/{slug}', [SanPhamController::class, 'category'])->name('site.product.category  ');
+//product detail
 Route::get('chi-tiet-san-pham/{slug}', [SanPhamController::class, 'detail'])->name('site.product.detail');
+
+
+
 Route::get('lien-he', [ContactController::class, 'index'])->name('site.contact');
 
 // Admin

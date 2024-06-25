@@ -105,15 +105,15 @@ class ProductController extends Controller
         $product->description = $request->description;
         if($request->hasFile('image')){
             if(in_array($request->image->extension(), ["jpg", "png", "webp", "gif"])){
-                $fileName = $post->slug . '.' . $request->image->extension();
-                $request->image->move(public_path("images/posts"), $fileName);
-                $post->image = $fileName;
+                $fileName = $product->slug . '.' . $request->image->extension();
+                $request->image->move(public_path("images/products"), $fileName);
+                $product->image = $fileName;
             }
         }
         $product->price = $request->price;
         $product->pricesale = $request->pricesale;
         $product->created_at = date('Y-m-d H:i:s');
-        $product->created_by = Auth::id() ?? 1;
+        $product->created_by = Auth::id() ?? 1;  
         $product->status = $request->status;
         $product->save();
 
