@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\frontend\HomeController;
 use App\Http\Controllers\frontend\ProductController as SanPhamController;
 use App\Http\Controllers\frontend\ContactController as LienheController;
+use App\Http\Controllers\frontend\PostController as BaivietController;
 use App\Http\Controllers\frontend\CartController;
 use App\Http\Controllers\AuthController;
 // Admin
@@ -40,7 +41,9 @@ Route::get('thanh-toan', [CartController::class, 'checkout'])->name('site.cart.c
 Route::get('lien-he', [ContactController::class, 'index'])->name('site.contact');
 
 
-
+//bai viet
+Route::get('tat-ca-bai-viet', [BaivietController::class, 'index'])->name('site.post.index');
+Route::get('chi-tiet-bai-viet/{slug}', [BaivietController::class, 'detail'])->name('site.post.detail');
 
 Route::get('dang-nhap', [AuthController::class, 'getlogin'])->name('website.getlogin');
 Route::post('dang-nhap', [AuthController::class, 'dologin'])->name('website.doLogin');
