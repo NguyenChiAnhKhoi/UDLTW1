@@ -15,6 +15,7 @@
 
     <!-- Libraries Stylesheet -->
     <link href="{{ asset('lib/owlcarousel/assets/owl.carousel.min.css') }}" rel="stylesheet">
+    <script src="{{ asset('js/bootstrap.min.js') }}"></script>
 
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
     <script src="{{ asset('jquery/jquery-3.7.1.min.js') }}"></script>

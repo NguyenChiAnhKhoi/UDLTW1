@@ -28,44 +28,83 @@ class PostController extends Controller
         return view('frontend.post_detail', compact('post', 'list_post'));
     }
 
-    public function getlisttopicid($rowid)
-    {
-        $listtopid=[];
-            array_push($listtopid, $rowid);
-            $list1 = Topic::where([['parent_id','=',$rowid], ['status','=',1]])->select("id")->get();
-            if(count($list1)>0)
-            {
-                foreach($list1 as $row1)
-                {
-                    array_push($listtopid, $row1->id);
-                    $list2 = Topic::where([['parent_id','=', $row1->id],['status','=',1]])->select("id")->get();
-                    if(count($list2)>0)
-                    {
-                        foreach($list2 as $row2)
-                        {
-                            array_push($listtopid, $row2->id);
-                            // $list2 = Category::where([['parent_id','=',$row1->id],['status','=',1]])->select("id")->get();
-                        }
-                    }
-                }
-            }
-            return $listtopid;
+    // public function getlisttopicid($rowid)
+    // {
+    //     $listtopid=[];
+    //         array_push($listtopid, $rowid);
+    //         $list1 = Topic::where([['topic_id','=',$rowid], ['status','=',1]])->select("id")->get();
+    //         if(count($list1)>0)
+    //         {
+    //             foreach($list1 as $row1)
+    //             {
+    //                 array_push($listtopid, $row1->id);
+    //                 $list2 = Topic::where([['topic_id','=', $row1->id],['status','=',1]])->select("id")->get();
+    //                 if(count($list2)>0)
+    //                 {
+    //                     foreach($list2 as $row2)
+    //                     {
+    //                         array_push($listtopid, $row2->id);
+    //                         // $list2 = Category::where([['parent_id','=',$row1->id],['status','=',1]])->select("id")->get();
+    //                     }
+    //                 }
+    //             }
+    //         }
+    //         return $listtopid;
 
+    // }
+
+    //       // topic
+    //       public function topic($slug)
+    //     {
+    //         $row=Topic::where('slug','=',$slug)->select("id", "name", "slug")->first();
+    //         $listtopid=[];
+    //         if($row!=null)
+    //         {
+    //             $listtopid = $this->getlisttopicid($row->id);
+    //         }
+    //         $list_post = Post::where('status', '=', 1)
+    //         ->whereIn('topic_id', $listtopid)
+    //         ->orderBy('created_at','desc')
+    //         ->paginate(9);
+    //         return view("frontend.post_topic", compact('list_post', 'row'));
+    //     }
+
+    public function getlisttopicid($rowid)
+{
+    $listtopid = [];
+
+    array_push($listtopid, $rowid);
+
+    $list1 = Topic::where([['id', '=', $rowid], ['status', '=', 1]])
+        ->select("id")
+        ->get();
+
+    if (count($list1) > 0) {
+        foreach ($list1 as $row1) {
+            array_push($listtopid, $row1->id);
+        }
     }
 
-          // topic
-          public function topic($slug)
-        {
-            $row=Topic::where('slug','=',$slug)->select("id", "name", "slug")->first();
-            $listtopid=[];
-            if($row!=null)
-            {
-                $listtopid = $this->getlistcategoryid($row->id);
-            }
-            $list_post = Post::where('status', '=', 1)
-            ->whereIn('topic_id', $listtopid)
-            ->orderBy('created_at','desc')
+    return $listtopid;
+}
+
+public function topic($slug)
+{
+    $row = Topic::where('slug', '=', $slug)
+        ->select("id", "name", "slug")
+        ->first();
+
+    $list_post = [];
+
+    if ($row != null) {
+        $listtopid = $this->getlisttopicid($row->id);
+
+        $list_post = Post::where('status', '=', 1)
+            ->where('topic_id', $listtopid)
+            ->orderBy('created_at', 'desc')
             ->paginate(9);
-            return view("frontend.post_topic", compact('list_post', 'row'));
-        }
+    }
+
+    return view("frontend.post_topic", compact('list_post', 'row'));
+}
 }

@@ -2,6 +2,8 @@
 @section('title', 'Tất cả sản phẩm')
 @section('header')
 <link rel="stylesheet" href="product.css">
+<link href="{{ asset('css/style.css') }}" rel="stylesheet">
+<script src="{{ asset('jquery/jquery-3.7.1.min.js') }}"></script>
 @endsection
 @section('content')
 <div class="container-fluid pt-5">

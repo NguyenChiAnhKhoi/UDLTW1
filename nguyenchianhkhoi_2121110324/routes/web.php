@@ -27,7 +27,7 @@ Route::get('/', [HomeController::class, 'index'])->name('site.home');
 Route::get('san-pham', [SanPhamController::class, 'index'])->name('site.product');
 
 //Product Category
-Route::get('danh-muc/{slug}', [SanPhamController::class, 'category'])->name('site.product.category  ');
+Route::get('danh-muc/{slug}', [SanPhamController::class, 'category'])->name('site.product.category');
 //product detail
 Route::get('chi-tiet-san-pham/{slug}', [SanPhamController::class, 'detail'])->name('site.product.detail');
 
@@ -44,6 +44,9 @@ Route::get('lien-he', [ContactController::class, 'index'])->name('site.contact')
 //bai viet
 Route::get('tat-ca-bai-viet', [BaivietController::class, 'index'])->name('site.post.index');
 Route::get('chi-tiet-bai-viet/{slug}', [BaivietController::class, 'detail'])->name('site.post.detail');
+Route::get('chu-de/{slug}', [BaivietController::class, 'topic'])->name('site.post.topic');
+
+
 
 Route::get('dang-nhap', [AuthController::class, 'getlogin'])->name('website.getlogin');
 Route::post('dang-nhap', [AuthController::class, 'dologin'])->name('website.doLogin');
