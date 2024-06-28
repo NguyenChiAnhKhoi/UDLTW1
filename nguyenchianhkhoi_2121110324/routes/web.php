@@ -37,6 +37,9 @@ Route::get('cart/addcart', [CartController::class, 'addcart'])->name('site.cart.
 Route::post('cart/update', [CartController::class, 'update'])->name('site.cart.update');
 Route::get('cart/delete/{id}', [CartController::class, 'delete'])->name('site.cart.delete');
 Route::get('thanh-toan', [CartController::class, 'checkout'])->name('site.cart.checkout');
+Route::post('thong-bao', [CartController::class, 'docheckout'])->name('site.cart.docheckout');
+
+
 
 Route::get('lien-he', [ContactController::class, 'index'])->name('site.contact');
 

@@ -11,8 +11,10 @@ class ProductCard extends Component
     /**
      * Create a new component instance.
      */
+    public  $product_row=null;
     public function __construct($productitem)
     {
+
         $this->product_row=$productitem;
     }
 

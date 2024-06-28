@@ -4,6 +4,8 @@
 <main>
 	<x-slider/>
     <x-features/>
+    <x-flash-sale/>
+    <x-product-new/>
 </main>
 
 @endsection

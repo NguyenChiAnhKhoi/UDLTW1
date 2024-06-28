@@ -15,12 +15,11 @@
 
     <!-- Libraries Stylesheet -->
     <link href="{{ asset('lib/owlcarousel/assets/owl.carousel.min.css') }}" rel="stylesheet">
-    <script src="{{ asset('js/bootstrap.min.js') }}"></script>
 
+    {{-- <link rel="stylesheet" href="{{ asset('css/bootstrap.css') }}"> --}}
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
     <script src="{{ asset('jquery/jquery-3.7.1.min.js') }}"></script>
-    {{-- @yield('css') --}}
-    @yield('header')
+    <script src="{{ asset('js/bootstrap.min.js') }}"></script>
 </head>
 <body>
 {{-- Header --}}
@@ -40,9 +39,27 @@
               <li class="nav-item">
                 <a class="nav-link" href="#">Giới thiệu</a>
               </li>
-              <li class="nav-item dropdown">
+              {{-- <li class="nav-item"> --}}
                 <x-main-menu/>
+
+                @if(Auth::check())
+                @php
+                    $user=Auth::user();
+                @endphp
+                   <li class="nav-item">
+                    {{$user->name}}
+                    <a class="nav-link" href="{{route('website.logout')}}">Đăng xuất</a>
+                  </li>
+                  @else
+                  <li class="nav-item">
+                    <a class="nav-link" href="{{route('website.getlogin')}}">Đăng nhập</a>
+                  </li>
+                  @endif
+              {{-- </li> --}}
+              <li class="nav-item">
+                <a class="nav-link" href="#">Giới thiệu</a>
               </li>
+
             </ul>
             <form class="d-flex" role="search">
               <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
@@ -131,6 +148,10 @@
 </footer>
 
 
+{{-- <script src="{{ asset('js/bootstrap.min.js') }}"></script>
+<script src="{{ asset('jquery/jquery-3.7.1.min.js') }}"></script> --}}
 
 </body>
+
+{{-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> --}}
 </html>
