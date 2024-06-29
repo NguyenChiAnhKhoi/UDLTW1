@@ -12,7 +12,7 @@ class PostController extends Controller
 {
     public function index()
     {
-    $list_post = Post::where([['status', '=', 1]])
+    $list_post = Post::where([['status', '=', 1], ['type','=','post']])
     ->orderBy('created_at','desc')
     ->paginate(9);
     return view("frontend.post", compact('list_post'));
@@ -21,91 +21,27 @@ class PostController extends Controller
     public function detail($slug)
     {
         $post=Post::where([['status','=',1], ['slug', '=', $slug]])->first();
-        $list_post = Post::where([['status', '=', 1], ['id', '!=', $post->id]])
+
+         $args=[
+            ['status', '=', 1], ['type', '=', 'post'],
+            ['topic_id', '=', $post->topic_id], ['id', '!=', $post->id]
+        ];
+        $list_post = Post::where($args)
         ->orderBy('created_at','desc')
-        ->limit(8)
+        ->limit(3)
         ->get();
         return view('frontend.post_detail', compact('post', 'list_post'));
     }
 
-    // public function getlisttopicid($rowid)
-    // {
-    //     $listtopid=[];
-    //         array_push($listtopid, $rowid);
-    //         $list1 = Topic::where([['topic_id','=',$rowid], ['status','=',1]])->select("id")->get();
-    //         if(count($list1)>0)
-    //         {
-    //             foreach($list1 as $row1)
-    //             {
-    //                 array_push($listtopid, $row1->id);
-    //                 $list2 = Topic::where([['topic_id','=', $row1->id],['status','=',1]])->select("id")->get();
-    //                 if(count($list2)>0)
-    //                 {
-    //                     foreach($list2 as $row2)
-    //                     {
-    //                         array_push($listtopid, $row2->id);
-    //                         // $list2 = Category::where([['parent_id','=',$row1->id],['status','=',1]])->select("id")->get();
-    //                     }
-    //                 }
-    //             }
-    //         }
-    //         return $listtopid;
 
-    // }
-
-    //       // topic
-    //       public function topic($slug)
-    //     {
-    //         $row=Topic::where('slug','=',$slug)->select("id", "name", "slug")->first();
-    //         $listtopid=[];
-    //         if($row!=null)
-    //         {
-    //             $listtopid = $this->getlisttopicid($row->id);
-    //         }
-    //         $list_post = Post::where('status', '=', 1)
-    //         ->whereIn('topic_id', $listtopid)
-    //         ->orderBy('created_at','desc')
-    //         ->paginate(9);
-    //         return view("frontend.post_topic", compact('list_post', 'row'));
-    //     }
-
-    public function getlisttopicid($rowid)
+public function topic ($slug)
 {
-    $listtopid = [];
 
-    array_push($listtopid, $rowid);
-
-    $list1 = Topic::where([['id', '=', $rowid], ['status', '=', 1]])
-        ->select("id")
-        ->get();
-
-    if (count($list1) > 0) {
-        foreach ($list1 as $row1) {
-            array_push($listtopid, $row1->id);
-        }
-    }
-
-    return $listtopid;
-}
-
-public function topic($slug)
-{
-    $row = Topic::where('slug', '=', $slug)
-        ->select("id", "name", "slug")
-        ->first();
-
-    $list_post = [];
-
-    if ($row != null) {
-        $listtopid = $this->getlisttopicid($row->id);
-
-        $list_post = Post::where('status', '=', 1)
-            ->where('topic_id', $listtopid)
-            ->orderBy('created_at', 'desc')
-            ->paginate(9);
-    }
-
-    return view("frontend.post_topic", compact('list_post', 'row'));
+$topic = Topic::where([['slug', '=', $slug], ['status','=',1]])->first();
+$list_post = Post::where([['status', '=', 1], ['type', '=', 'post'], ['topic_id', '=', $topic->id]])
+->orderBy('created_at', 'desc')
+->paginate (9);
+return view('frontend.post_topic', compact ('list_post', 'topic'));
 }
 
 

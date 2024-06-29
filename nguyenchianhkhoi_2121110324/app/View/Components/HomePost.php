@@ -24,7 +24,7 @@ class HomePost extends Component
     {
         $post=Post::where('status', '=', 1)
         ->orderBy('created_at','desc')
-        ->limit(5)
+        ->limit(3)
         ->get();
         return view('components.home-post', compact('post'));
     }

@@ -1,5 +1,5 @@
 @extends('layouts.site')
-@section('title', 'Tất cả sản phẩm')
+@section('title', 'Sản phẩm theo danh mục')
 
 @section('content')
 <div class="container-fluid pt-5">

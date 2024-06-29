@@ -7,9 +7,13 @@
 @endsection
 @section('content')
 <div class="container-fluid pt-5">
+    <div class="container-fluid bg-secondary mb-5">
+        <div class="d-flex flex-column align-items-center justify-content-center" style="min-height: 300px">
+            <h1 class="font-weight-semi-bold text-uppercase mb-3">TAT CA BAI VIET</h1>
 
+        </div>
+    </div>
     <div class="container">
-        <h1 class="mb-4 text-center">Tat ca bai viet</h1>
         <div class="row">
             @foreach($list_post as $postitem)
                 <div class="col-lg-4 col-md-6">

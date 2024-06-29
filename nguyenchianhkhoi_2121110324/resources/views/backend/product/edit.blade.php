@@ -6,7 +6,7 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-12">
-                        <h1 class="d-inline">Tất cả Sản Phẩm</h1>
+                        <h1 class="d-inline">Chỉnh sửa sản phẩm</h1>
                     </div>
                 </div>
             </div>
@@ -15,15 +15,13 @@
         <section class="content">
             <div class="card">
                 <div class="card-header text-right">
-                    <button class="btn btn-sm btn-success">
-                        <i class="fa fa-solid fa-plus"></i>
-                        Thêm sản phẩm
-                    </button>
-                    <button class="btn btn-sm btn-success">
-                        <i class="fa fa-save" aria-hidden="true"></i>
-                        Thêm vào thùng rác
-                    </button>
-                </div>
+                    <a href="{{route('admin.product.index')}}">
+                        <button class="btn btn-sm btn-primary" >
+                                    Quay về danh sách
+                        </button>
+                    </a>
+
+                                    </div>
                 <div class="card-body">
                     @php
                         $args = ['id' => $product->id];

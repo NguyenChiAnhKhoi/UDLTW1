@@ -7,7 +7,7 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-12">
-                        <h1 class="d-inline">Tất cả Sản Phẩm</h1>
+                        <h1 class="d-inline">Tất cả sản Phẩm</h1>
                     </div>
                 </div>
             </div>
@@ -16,18 +16,17 @@
         <section class="content">
             <div class="card">
                 <div class="card-header text-right">
-                    <button class="btn btn-sm btn-success">
-                        <i class="fa fa-solid fa-plus"></i>
-                        Thêm sản phẩm
-                    </button>
-                    <button class="btn btn-sm btn-success">
-                        <i class="fa fa-save" aria-hidden="true"></i>
-                        Thêm vào thùng rác
-                    </button>
+<a href="{{route('admin.product.trash')}}">
+    <button class="btn btn-sm btn-danger" >
+        <i class="fa fa-trash text-white"   aria-hidden="true"></i>
+                Xem thùng rác
+    </button>
+</a>
+
                 </div>
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-md-4">
+                        <div class="col-md-3">
                             <form action="{{ route('admin.product.store') }}" enctype="multipart/form-data" method="post">
                                 @csrf
                                 <div class="mb-3">
@@ -39,7 +38,7 @@
                                     @enderror
                                 </div>
                                 <div class="mb-3">
-                                    <label>Danh mục cha (*)</label>
+                                    <label>Danh mục  (*)</label>
                                     <select name="category_id" class="form-control">
                                         <option value="">Chọn danh mục</option>
                                         @foreach ($categories as $id => $name)
@@ -78,7 +77,7 @@
                                     <input type="file" name="image" class="form-control">
                                 </div> --}}
                                 <div class="mb-3">
-                                    <label>Thương hiệu cha (*)</label>
+                                    <label>Thương hiệu (*)</label>
                                     <select name="brand_id" class="form-control">
                                         <option value="">Chọn thương hiệu</option>
                                         @foreach ($brands as $id => $name)
@@ -101,18 +100,21 @@
                                 </div>
                             </form>
                         </div>
-                        <div class="col-md-8">
+                        <div class="col-md-9">
                             <table class="table table-bordered">
                                 <thead>
                                     <tr>
                                         <th class="text-center" style="width:30px;">
                                             <input type="checkbox">
                                         </th>
+                                        <th class="text-center" >ID</th>
                                         <th class="text-center" style="width:130px;">Hình ảnh</th>
                                         <th>Tên sản phẩm</th>
                                         <th>Tên slug</th>
+                                        <th>Giá</th>
+                                        <th>Giá khuyến mãi</th>
                                         <th class="text-center" style="width:190px;">Chức năng</th>
-                                        <th class="text-center" >ID</th>
+
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -120,6 +122,9 @@
                                         <tr class="datarow">
                                             <td>
                                                 <input type="checkbox">
+                                            </td>
+                                            <td>
+                                                {{$row->id}}
                                             </td>
                                             <td>
                                                 <img src="{{ asset('/images/products/' . $row->image) }}"
@@ -131,6 +136,8 @@
                                                 </div>
                                             </td>
                                             <td> {{ $row->slug }}</td>
+                                            <td> {{ $row->price }}</td>
+                                            <td> {{ $row->pricesale  }}</td>
                                             @php
                                             $args=['id'=>$row->id];
                                         @endphp
@@ -138,13 +145,13 @@
                                                 <a href="#" class="btn btn-sm btn-success">
                                                     <i class="fa fa-toggle-on" aria-hidden="true"></i>
                                                 </a>
-                                                <a href="#" class="btn btn-sm btn-info">
+                                                <a href="{{ route('admin.product.show',$args) }}" class="btn btn-sm btn-info">
                                                     <i class="fa fa-eye" aria-hidden="true"></i>
                                                 </a>
                                                 <a href="{{ route('admin.product.edit',$args) }}" class="btn btn-sm btn-primary">
                                                     <i class="fa fa-edit" aria-hidden="true"></i>
                                                 </a>
-                                                <a href="#" class="btn btn-sm btn-danger">
+                                                <a href="{{ route('admin.product.delete',$args) }}" class="btn btn-sm btn-danger">
                                                     <i class="fa fa-trash" aria-hidden="true"></i>
                                                 </a>
                                             </td>

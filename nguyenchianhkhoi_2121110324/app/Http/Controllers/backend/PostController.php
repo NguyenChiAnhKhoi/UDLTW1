@@ -15,8 +15,8 @@ class PostController extends Controller
     //
     public function index()
     {
-        $list = Post::where('status', '!=', 0)->orderBy('created_at', 'desc')->get();
-        $topics = Topic::where('status', '!=', 0)->pluck('name', 'id');
+        $list = Post::where('status', '!=', 2)->orderBy('created_at', 'desc')->get();
+        $topics = Topic::where('status', '!=', 2)->pluck('name', 'id');
         return view("backend.post.index", compact('list','topics'));
     }
 
@@ -50,11 +50,11 @@ class PostController extends Controller
             session()->flash('error', 'Dữ liệu id của danh mục không tồn tại!');
             return view("backend.post.index");
         }
-        $list = Post::where('post.status', '!=', 0)
+        $list = Post::where('post.status', '!=', 2)
             ->select('post.id', 'post.title', 'post.image', 'post.slug')
             ->orderBy('post.created_at', 'desc')
             ->get();
-            $topics = Topic::where('status', '!=', 0)
+            $topics = Topic::where('status', '!=', 2)
             ->select('topic.id', 'topic.name' )
             ->get();
             // ->pluck('name', 'id');
@@ -112,5 +112,66 @@ class PostController extends Controller
         $post->status = $request->status; //form
         $post->save(); //Luuu vao CSDL
         return redirect()->route('admin.post.index');
+    }
+
+    public function show(string $id)
+    {
+        $post = Post::find($id);
+        if($post == null)
+        {
+            session()->flash('error', 'Dữ liệu id của danh mục không tồn tại!');
+            return view("backend.post.index");
+        }
+        $list = Post::where('post.status', '!=', 2)
+            ->select('post.id', 'post.title', 'post.image', 'post.slug', 'post.description')
+            ->orderBy('post.created_at', 'desc')
+            ->get();
+        $topic  = Topic::where('status', '!=', 2)
+                ->select('topic.id', 'topic.name' )
+                ->get();
+
+
+        return view("backend.post.show", compact("post","topic"));
+    }
+
+    public function delete(Request $request, string $id)
+    {
+        $post = Post::find($id);
+        if($post==null){
+            //chuyen trang va bao loi
+        }
+
+        $post->status = 2;
+        $post->save();
+
+        return redirect()->route('admin.post.index');
+    }
+
+    public function trash()
+    {
+        $topics = Topic::where('status', '!=', 2)->pluck('name', 'id');
+        $list = Post::where('status', '=', 2)->orderBy('created_at', 'desc')->get();
+        return view("backend.post.trash", compact('topics','list'));
+    }
+
+    public function restore(Request $request, string $id)
+    {
+        $post = Post::find($id);
+        if($post==null){
+            //chuyen trang va bao loi
+        }
+
+        $post->status = 0;
+        $post->save();
+
+        return redirect()->route('admin.post.trash');
+    }
+
+    public function destroy($id)
+    {
+        $post = Post::findOrFail($id);
+        $post->delete();
+
+        return redirect()->route('admin.post.trash');
     }
 }

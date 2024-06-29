@@ -15,14 +15,12 @@
         <section class="content">
             <div class="card">
                 <div class="card-header text-right">
-                    <button class="btn btn-sm btn-success">
-                        <i class="fa fa-solid fa-plus"></i>
-                        Thêm menu
-                    </button>
-                    <button class="btn btn-sm btn-success">
-                        <i class="fa fa-save" aria-hidden="true"></i>
-                        Thêm vào thùng rác
-                    </button>
+                    <a href="{{route('admin.order.trash')}}">
+                        <button class="btn btn-sm btn-danger" >
+                            <i class="fa fa-trash text-white"   aria-hidden="true"></i>
+                                    Xem thùng rác
+                        </button>
+                    </a>
                 </div>
                 <div class="card-body">
                     <div class="row">
@@ -84,7 +82,7 @@
                                 <label>Note (*)</label>
                                 <textarea rows="1" name="note" id="note" placeholder="note" class="form-control"></textarea>
                             </div>
-                            
+
                             <div class="mb-3">
                                 <label>Trạng thái</label>
                                 <select name="status" class="form-control">
@@ -100,7 +98,7 @@
                             </div>
 
                         </form>
-                    </div> 
+                    </div>
                                            <div class="col-md-8">
                             <table class="table table-bordered">
             <thead>
@@ -119,7 +117,7 @@
                                             <td>
                                                 <input type="checkbox">
                                             </td>
-                                            
+
                                             <td>
                                                 <div class="name">
                                                     {{ $row->delivery_name }}

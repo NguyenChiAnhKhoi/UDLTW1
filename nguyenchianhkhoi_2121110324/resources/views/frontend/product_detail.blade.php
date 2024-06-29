@@ -235,15 +235,19 @@
     <div class="row px-xl-5">
         <div class="col">
             <div class="owl-carousel related-carousel">
-                @foreach ( $list_product as $productitem )
-                <div class="card product-item border-0">
-                    <x-product-card :$productitem/>
-                    <div class="card-footer d-flex justify-content-between bg-light border">
-                        <a href="" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>View Detail</a>
-                        <a href="" class="btn btn-sm text-dark p-0"><i class="fas fa-shopping-cart text-primary mr-1"></i>Add To Cart</a>
+                <div class="row">
+                    @foreach ( $list_product as $productitem )
+                    <div class="col-md-4">
+                        <div class="card product-item border-0">
+                            <x-product-card :$productitem/>
+                        </div>
                     </div>
-                </div>
+
+
+
                 @endforeach
+                </div>
+
 
 
             </div>

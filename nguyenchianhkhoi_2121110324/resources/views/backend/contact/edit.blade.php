@@ -33,7 +33,7 @@
             </div>
             <div class="card-body">
             @php
-                        $args = ['id' => $contact->id];   
+                        $args = ['id' => $contact->id];
                     @endphp
                     <div class="row">
                      <div class="col-md-4">
@@ -85,7 +85,7 @@
                                 <label>Hình</label>
                                 <input type="file" name="image" class="form-control">
                             </div>
-                       
+
                             <div class="mb-3">
                                 <label>Content (*)</label>
                                 <textarea rows="3" name="content" id="descricontentption" placeholder="Nhập content của contact" class="form-control">{{ old('contant',$contact->content) }}</textarea>
@@ -94,16 +94,16 @@
                                 <label>Replay Id (*)</label>
                                 <input type="number" value="{{ old('replay_id',$contact->replay_id) }}" name="replay_id" id="replay_id" placeholder="Nhập replay id" class="form-control"></input>
                             </div>
-                     
+
                             <div class="mb-3">
                                 <label>Trạng thái</label>
                                 <select name="status" class="form-control">
                                     <option value="1">Xuất bản</option>
-                                    <option value="2">Chưa xuất bản</option>
+                                    <option value="0">Chưa xuất bản</option>
                                 </select>
                             </div>
-            
-            
+
+
                             <div class="card-header text-right">
                                 <button class="btn btn-sm btn-success">
                                     <i class="fa fa-save" aria-hidden="true"></i>
@@ -112,7 +112,7 @@
                             </div>
 
                         </form>
-                    </div> 
+                    </div>
         </div>
         </div>
     </section>

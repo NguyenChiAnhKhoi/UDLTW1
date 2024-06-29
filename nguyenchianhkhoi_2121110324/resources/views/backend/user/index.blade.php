@@ -15,14 +15,12 @@
         <section class="content">
             <div class="card">
                 <div class="card-header text-right">
-                    <button class="btn btn-sm btn-success">
-                        <i class="fa fa-solid fa-plus"></i>
-                        Thêm User
-                    </button>
-                    <button class="btn btn-sm btn-success">
-                        <i class="fa fa-save" aria-hidden="true"></i>
-                        Thêm vào thùng rác
-                    </button>
+                    <a href="{{route('admin.topic.trash')}}">
+                        <button class="btn btn-sm btn-danger" >
+                            <i class="fa fa-trash text-white"   aria-hidden="true"></i>
+                                    Xem thùng rác
+                        </button>
+                    </a>
                 </div>
                 <div class="card-body">
                     <div class="row">
@@ -59,7 +57,7 @@
                             <div class="mb-3">
                                 <label>Email (*)</label>
                                 <textarea rows="1" name="email" id="email" placeholder="Nhập email  " class="form-control"></textarea>
-                            </div>             
+                            </div>
                             <div class="mb-3">
                                 <label>Vai trò</label>
                                 <select name="roles" class="form-control">
@@ -74,7 +72,7 @@
                             <div class="mb-3">
                                 <label>Địa chỉ (*)</label>
                                 <textarea rows="1" name="address" id="address" placeholder="Nhập địa chỉ" class="form-control"></textarea>
-                            </div>   
+                            </div>
                             <div class="mb-3">
                                 <label>Trạng thái</label>
                                 <select name="status" class="form-control">
@@ -90,7 +88,7 @@
                             </div>
 
                         </form>
-                    </div> 
+                    </div>
                                            <div class="col-md-8">
                             <table class="table table-bordered">
             <thead>
@@ -115,8 +113,8 @@
                                             <td>
                                             <img src="{{asset('images/users/'.$row->image)}}" style="width:300px" alt="{{ $row->image }}">
                                             </td>
-                                           
-                                            
+
+
                                             <td>
                                                 <div class="name">
                                                     {{ $row->name }}

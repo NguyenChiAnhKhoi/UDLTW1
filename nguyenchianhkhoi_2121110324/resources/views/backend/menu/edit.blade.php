@@ -89,7 +89,7 @@
                                 <label>Trạng thái</label>
                                 <select name="status" class="form-control">
                                     <option value="1">Xuất bản</option>
-                                    <option value="2">Chưa xuất bản</option>
+                                    <option value="0">Chưa xuất bản</option>
                                 </select>
                             </div>
                             <div class="card-header text-right">
@@ -100,7 +100,7 @@
                             </div>
 
                         </form>
-                    </div> 
+                    </div>
         </div>
         </div>
     </section>

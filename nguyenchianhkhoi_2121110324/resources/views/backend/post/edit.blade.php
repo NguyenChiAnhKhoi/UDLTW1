@@ -15,15 +15,13 @@
         <section class="content">
             <div class="card">
                 <div class="card-header text-right">
-                    <button class="btn btn-sm btn-success">
-                        <i class="fa fa-solid fa-plus"></i>
-                        Thêm Post
-                    </button>
-                    <button class="btn btn-sm btn-success">
-                        <i class="fa fa-save" aria-hidden="true"></i>
-                        Thêm vào thùng rác
-                    </button>
-                </div>
+                    <a href="{{route('admin.product.index')}}">
+                        <button class="btn btn-sm btn-primary" >
+                                    Quay về danh sách
+                        </button>
+                    </a>
+
+                                    </div>
                 <div class="card-body">
                     @php
                         $args = ['id' => $post->id];
@@ -75,7 +73,7 @@
                         <div class="mb-3">
                             <label>Trạng thái</label>
                             <select name="status" class="form-control">
-                                <option value="2" {{ $post->status == 2 ? 'selected' : '' }}>Chưa xuất bản</option>
+                                <option value="0" {{ $post->status == 0 ? 'selected' : '' }}>Chưa xuất bản</option>
                                 <option value="1" {{ $post->status == 1 ? 'selected' : '' }}>Xuất bản</option>
                             </select>
                         </div>

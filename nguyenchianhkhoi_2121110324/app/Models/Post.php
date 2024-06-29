@@ -9,4 +9,9 @@ class Post extends Model
 {
     use HasFactory;
     protected $table = "post";
+
+    public function topic()
+    {
+        return $this->belongsTo(Topic::class);
+    }
 }

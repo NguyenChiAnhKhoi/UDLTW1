@@ -19,11 +19,13 @@
         <section class="content">
             <div class="card">
                 <div class="card-header text-right">
-                    <button class="btn btn-sm btn-success">
-                        <i class="fa fa-save" aria-hidden="true"></i>
-                        Lưu
-                    </button>
-                </div>
+                    <a href="{{route('admin.banner.index')}}">
+                        <button class="btn btn-sm btn-primary" >
+                                    Quay về danh sách
+                        </button>
+                    </a>
+
+                                    </div>
                 <div class="card-body">
                 @php
                         $args = ['id' => $banner->id];
@@ -33,11 +35,11 @@
                         <form action="{{ route('admin.banner.update', $args) }}"enctype="multipart/form-data" method="post">
                         @csrf
                         @method('PUT')
-                                
+
                                 <div class="mb-3">
                                     <label for="name">Tên Banner</label>
                                     {{-- old là giữ lại giá trị đó nếu 1 trong cái khác trong bài bị lỗi thì nó sẽ load lại form này, old giúp giữ lại giá trị để khỏi cần nhập lại --}}
-                                    <input type="text" value="{{ old('name',$banner->name) }}" name="name" id="name" class="form-control"> 
+                                    <input type="text" value="{{ old('name',$banner->name) }}" name="name" id="name" class="form-control">
                                     @error('name')
                                         {{ $message }}
                                     @enderror
@@ -64,7 +66,7 @@
                                 <div class="mb-3">
                             <label>Trạng thái</label>
                             <select name="status" class="form-control">
-                                <option value="2" {{($banner->status==2)?'selected':''}}>Chưa xuất bản</option>
+                                <option value="0" {{($banner->status==0)?'selected':''}}>Chưa xuất bản</option>
                                 <option value="1" {{($banner->status==1)?'selected':''}}>Xuất bản</option>
                             </select>
                         </div>
@@ -73,7 +75,7 @@
                                 </div>
                             </form>
                         </div>
-                      
+
                     </div>
                 </div>
             </div>

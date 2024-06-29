@@ -7,10 +7,7 @@
                 <div class="row mb-2">
                     <div class="col-sm-12 row">
                         <h1 class="d-inline col-md-10">Tất cả Banner</h1>
-                        <div class="col-md-2 text-right">
-                            <a href="#" class="text-danger"><i class="fa fa-trash"
-                                    aria-hidden="true"></i><sup>0</sup></a>
-                        </div>
+
                     </div>
                 </div>
             </div>
@@ -19,10 +16,12 @@
         <section class="content">
             <div class="card">
                 <div class="card-header text-right">
-                    <button class="btn btn-sm btn-success">
-                        <i class="fa fa-save" aria-hidden="true"></i>
-                        Lưu
-                    </button>
+                    <a href="{{route('admin.banner.trash')}}">
+                        <button class="btn btn-sm btn-danger" >
+                            <i class="fa fa-trash text-white"   aria-hidden="true"></i>
+                                    Xem thùng rác
+                        </button>
+                    </a>
                 </div>
                 <div class="card-body">
                     <div class="row">
@@ -32,7 +31,7 @@
                                 <div class="mb-3">
                                     <label for="name">Tên Banner</label>
                                     {{-- old là giữ lại giá trị đó nếu 1 trong cái khác trong bài bị lỗi thì nó sẽ load lại form này, old giúp giữ lại giá trị để khỏi cần nhập lại --}}
-                                    <input type="text" value="{{ old('name') }}" name="name" id="name" class="form-control"> 
+                                    <input type="text" value="{{ old('name') }}" name="name" id="name" class="form-control">
                                     @error('name')
                                         {{ $message }}
                                     @enderror
@@ -46,10 +45,10 @@
                                     <textarea name="link" id="link" rows="3" class="form-control">{{ old('link') }}</textarea>
                                 </div>
                                 <div class="mb-3">
-                                    <label for="position">Sắp xếp</label>
+                                    <label for="position">Vị trí</label>
                                     <select name="position" id="position" class="form-control">
-                                        <option value="0">Chọn vị trí</option>
-                                        {!! $htmlposition !!}
+                                    <option value="slider-main">Slider Main</option>
+                                    <option value="slider-show">Slider Show</option>
                                     </select>
                                 </div>
                                 <div class="mb-3">
@@ -59,7 +58,7 @@
                                 <div class="mb-3">
                                     <label for="status">Trạng thái</label>
                                     <select name="status" id="status" class="form-control">
-                                        <option value="2">Chưa xuất bản</option>
+                                        <option value="0">Chưa xuất bản</option>
                                         <option value="1">Xuất bản</option>
                                     </select>
                                 </div>
@@ -68,57 +67,69 @@
                                 </div>
                             </form>
                         </div>
-                        <div class="col-md-8">
+                        <div class="col-md-9">
                             <table class="table table-bordered">
                                 <thead>
                                     <tr>
                                         <th class="text-center" style="width:30px;">
                                             <input type="checkbox">
                                         </th>
-                                        <th>Id</th>
-                                        <th class="text-center" style="width:130px;">Hình ảnh Tên </th>
-                                        <th>Tên Banner</th>
-                                        <th>Link</th>
-                                        <th>Hành động</th>
+                                        <th class="text-center">ID</th>
+                                        <th class="text-center" style="width:130px;">Hình ảnh</th>
+                                        <th>Tên banner</th>
+                                        <th>Vị trí</th>
+                                        <th>Trạng thái</th>
+                                        <th class="text-center" style="width:190px;">Chức năng</th>
+
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach ($list as $row)
-                                    <tr class="datarow">
-                                        <td>
-                                            <input type="checkbox">
-                                        </td>
-                                        <td>
-                                            {{$row->id}}
-                                        </td>
-                                        <td>
-                                       
-                                        
+                                        <tr class="datarow">
+                                            <td>
+                                                <input type="checkbox">
+                                            </td>
 
-                                        <img src="{{asset('images/banner/'.$row->image)}}" alt="{{$row->image}}" style="width: 200px; height: 150px;">
-                                        </td>
-                                        <td>
-                                            {{$row->name}}
-                                        </td>
-                                        <td>
-                                            {{$row->link}}
-                                        </td>
-                                        @php
+                                            <td>
+                                                <div>
+                                                    {{ $row->id }}
+                                                </div>
+                                            </td>
+                                            <td class="text-center">
+                                                <img src="{{ asset('/images/banner/' . $row->image) }}"
+                                                    alt="banner.jpg" style="width:80px">
+                                            </td>
+                                            <td>
+                                                <div class="name">
+                                                    {{ $row->name }}
+                                                </div>
+                                            </td>
+                                            <td> {{ $row->position }}</td>
+                                            @if ($row->status == 1)
+                                            <td>Xuất bản</td>
+                                            @else
+                                            <td>Chưa xuất bản</td>
+                                            @endif
+
+
+                                            @php
                                                 $args=['id'=>$row->id];
                                             @endphp
-                                        <td>
-                                            <a class="btn btn-sm btn-warning" href="#">Hiện</a>
-                                            <a class="btn btn-sm btn-success" href="{{route('admin.banner.edit',$args)}}">
-                                                <i class="fa fa-edit" aria-hidden="true"></i>
-                                            </a>
-                                            <a class="btn btn-sm btn-info" href="{{route('admin.category.show',['id', $row->id])}}">
-                                                <i class="fa fa-eye" aria-hidden="true"></i>
-                                            </a>
-                                            <a class="btn btn-sm btn-danger" href="#">
-                                                <i class="fa fa-trash" aria-hidden="true"></i>
-                                            </a>
-                                        </td>
-                                    </tr>
+                                            <td class="text-center">
+                                                <a href="#" class="btn btn-sm btn-success">
+                                                    <i class="fa fa-toggle-on" aria-hidden="true"></i>
+                                                </a>
+                                                <a href="{{ route('admin.banner.show',$args) }}" class="btn btn-sm btn-info">
+                                                    <i class="fa fa-eye" aria-hidden="true"></i>
+                                                </a>
+                                                <a href="{{ route('admin.banner.edit',$args) }}" class="btn btn-sm btn-primary">
+                                                    <i class="fa fa-edit" aria-hidden="true"></i>
+                                                </a>
+                                                <a href="{{ route('admin.banner.delete',$args) }}" class="btn btn-sm btn-danger">
+                                                    <i class="fa fa-trash" aria-hidden="true"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
                                     @endforeach
                                 </tbody>
                             </table>

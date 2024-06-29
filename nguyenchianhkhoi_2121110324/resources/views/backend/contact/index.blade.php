@@ -15,14 +15,12 @@
         <section class="content">
             <div class="card">
                 <div class="card-header text-right">
-                    <button class="btn btn-sm btn-success">
-                        <i class="fa fa-solid fa-plus"></i>
-                        Thêm Liên hệ
-                    </button>
-                    <button class="btn btn-sm btn-success">
-                        <i class="fa fa-save" aria-hidden="true"></i>
-                        Thêm vào thùng rác
-                    </button>
+                    <a href="{{route('admin.contact.trash')}}">
+                        <button class="btn btn-sm btn-danger" >
+                            <i class="fa fa-trash text-white"   aria-hidden="true"></i>
+                                    Xem thùng rác
+                        </button>
+                    </a>
                 </div>
                 <div class="card-body">
                     <div class="row">
@@ -51,7 +49,7 @@
                                 <label>Title (*)</label>
                                 <textarea rows="3" name="title" id="title" placeholder="Nhập title" class="form-control"></textarea>
                             </div>
-            
+
                             <div class="mb-3">
                                 <label>Phone (*)</label>
                                 <textarea rows="3" name="phone" id="phone" placeholder="Nhập số điện thoại" class="form-control"></textarea>
@@ -60,9 +58,9 @@
                                 <label>Email (*)</label>
                                 <textarea rows="3" name="email" id="email" placeholder="Nhập Email" class="form-control"></textarea>
                             </div>
-                      
-                 
-                       
+
+
+
                             <div class="mb-3">
                                 <label>Content (*)</label>
                                 <textarea rows="3" name="content" id="descricontentption" placeholder="Nhập content của contact" class="form-control"></textarea>
@@ -71,12 +69,12 @@
                                 <label>Replay Id (*)</label>
                                 <input type="number" name="replay_id" id="replay_id" placeholder="Nhập replay id" class="form-control"></input>
                             </div>
-                     
+
                             <div class="mb-3">
                                 <label>Trạng thái</label>
                                 <select name="status" class="form-control">
                                     <option value="1">Xuất bản</option>
-                                    <option value="2">Chưa xuất bản</option>
+                                    <option value="0">Chưa xuất bản</option>
                                 </select>
                             </div>
                             <div class="card-header text-right">
@@ -86,7 +84,7 @@
                                 </button>
                             </div>
                         </form>
-                    </div>          
+                    </div>
                     <div class="col-md-8">
                             <table class="table table-bordered">
             <thead>
@@ -94,7 +92,7 @@
                                         <th class="text-center" style="width:30px;">
                                             <input type="checkbox">
                                         </th>
-                         
+
                                         <th>Tên liên hệ</th>
                                         <th>Phone</th>
                                         <th></th>
@@ -139,7 +137,7 @@
                                     @endforeach
                                 </tbody>
                             </table>
-                        </div>              
+                        </div>
         </section>
     </div>
 

@@ -15,15 +15,13 @@
         <section class="content">
             <div class="card">
                 <div class="card-header text-right">
-                    <button class="btn btn-sm btn-success">
-                        <i class="fa fa-solid fa-plus"></i>
-                        Thêm sản phẩm
-                    </button>
-                    <button class="btn btn-sm btn-success">
-                        <i class="fa fa-save" aria-hidden="true"></i>
-                        Thêm vào thùng rác
-                    </button>
-                </div>
+                    <a href="{{route('admin.category.index')}}">
+                        <button class="btn btn-sm btn-primary" >
+                                    Quay về danh sách
+                        </button>
+                    </a>
+
+                                    </div>
                 <div class="card-body">
                     @php
                         $args = ['id' => $category->id];
@@ -64,7 +62,7 @@
                         <div class="mb-3">
                             <label>Trạng thái</label>
                             <select name="status" class="form-control">
-                                <option value="2" {{($category->status==2)?'selected':''}}>Chưa xuất bản</option>
+                                <option value="0" {{($category->status==0)?'selected':''}}>Chưa xuất bản</option>
                                 <option value="1" {{($category->status==1)?'selected':''}}>Xuất bản</option>
                             </select>
                         </div>

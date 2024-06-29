@@ -17,7 +17,7 @@ class TopicController extends Controller
      */
     public function index()
     {
-        $list=Topic::where('status','!=',0)->orderBy('created_at','desc')->get();
+        $list=Topic::where('status','!=',2)->orderBy('created_at','desc')->get();
         $htmlparentid="";
         $htmlsortorder="";
         foreach($list as $item){
@@ -27,7 +27,7 @@ class TopicController extends Controller
         return view("backend.topic.index",compact("list","htmlparentid","htmlsortorder"));
     }
 
-   
+
     public function store(StoreTopicRequest $request)
     {
         $topic = new Topic();
@@ -42,13 +42,7 @@ class TopicController extends Controller
         return redirect()->route('admin.topic.index');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
+
 
     /**
      * Show the form for editing the specified resource.
@@ -61,7 +55,7 @@ class TopicController extends Controller
             session()->flash('error', 'Dữ liệu id của danh mục không tồn tại!');
             return view("backend.topic.index");
         }
-        $list = Topic::where('topic.status', '!=', 0)
+        $list = Topic::where('topic.status', '!=', 2)
             ->select('topic.id', 'topic.name', 'topic.slug', 'topic.description')
             ->orderBy('topic.created_at', 'desc')
             ->get();
@@ -99,11 +93,61 @@ class TopicController extends Controller
         return redirect()->route('admin.topic.index');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
+
+    public function show(string $id)
     {
-        //
+        $topic = Topic::find($id);
+        if($topic == null)
+        {
+            session()->flash('error', 'Dữ liệu id của danh mục không tồn tại!');
+            return view("backend.topic.index");
+        }
+        $list = Topic::where('topic.status', '!=', 2)
+            ->select('topic.id', 'topic.name', 'topic.slug', 'topic.description')
+            ->orderBy('topic.created_at', 'desc')
+            ->get();
+
+
+
+        return view("backend.topic.show", compact("topic","list"));
     }
+
+    public function delete(Request $request, string $id)
+    {
+        $topic = Topic::find($id);
+        if($topic==null){
+            //chuyen trang va bao loi
+        }
+
+        $topic->status = 2;
+        $topic->save();
+
+        return redirect()->route('admin.topic.index');
+    }
+    public function trash()
+    {
+        $list = Topic::where('status', '=', 2)->orderBy('created_at', 'desc')->get();
+        return view("backend.topic.trash", compact('list'));
+    }
+    public function restore(Request $request, string $id)
+    {
+        $topic = Topic::find($id);
+        if($topic==null){
+            //chuyen trang va bao loi
+        }
+
+        $topic->status = 0;
+        $topic->save();
+
+        return redirect()->route('admin.topic.trash');
+    }
+
+    public function destroy($id)
+    {
+        $topic = Topic::findOrFail($id);
+        $topic->delete();
+
+        return redirect()->route('admin.topic.trash');
+    }
+
 }

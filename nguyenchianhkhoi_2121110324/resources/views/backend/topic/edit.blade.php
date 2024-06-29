@@ -19,21 +19,17 @@
     </section>
     <section class="content">
         <div class="card">
-            <div class="card-header">
-                <div class="row">
-                    <div class="col-12 text-right">
-                        {{-- <a href="#" class="btn btn-sm btn-success">
-              <i class="fa fa-plus" aria-hidden="true"></i>Thêm
-            </a> --}}
-                        <a href="#" class="btn btn-sm btn-danger">
-                            <i class="fa fa-trash" aria-hidden="true"></i>Thùng rác
-                        </a>
-                    </div>
-                </div>
+            <div class="card-header text-right">
+                <a href="{{route('admin.topic.index')}}">
+                    <button class="btn btn-sm btn-primary" >
+                                Quay về danh sách
+                    </button>
+                </a>
+
             </div>
             <div class="card-body">
                 <div class="row">
-                    <div class="col-md-3">
+                    <div class="col-md">
                       {{-- @if ($errors->any())
                       <div class="alert alert-danger">
                         <ul>
@@ -68,9 +64,9 @@
                             </div>
                             <div class="mb-3">
                                 <label for="status">Trạng thái</label>
-                                <select name="status" id="status" class="form-control">
-                                    <option value="2">Chưa xuất bản</option>
-                                    <option value="1">Xuất bản</option>
+                                <select name="status" class="form-control">
+                                    <option value="0" {{($topic->status==0)?'selected':''}}>Chưa xuất bản</option>
+                                    <option value="1" {{($topic->status==1)?'selected':''}}>Xuất bản</option>
                                 </select>
                             </div>
                             <div class="mb-3">

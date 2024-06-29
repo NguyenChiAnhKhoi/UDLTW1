@@ -16,9 +16,9 @@ class ProductController extends Controller
     //
     public function index()
     {
-        $categories = Category::where('status', '!=', 0)->pluck('name', 'id');
-        $brands = Brand::where('status', '!=', 0)->pluck('name', 'id');
-        $list = Product::where('status', '!=', 0)->orderBy('created_at', 'desc')->get();
+        $categories = Category::where('status', '!=', 2)->pluck('name', 'id');
+        $brands = Brand::where('status', '!=', 2)->pluck('name', 'id');
+        $list = Product::where('status', '!=', 2)->orderBy('created_at', 'desc')->get();
         return view("backend.product.index", compact('categories','brands','list'));
     }
      /* them */
@@ -55,14 +55,14 @@ class ProductController extends Controller
             session()->flash('error', 'Dữ liệu id của danh mục không tồn tại!');
             return view("backend.product.index");
         }
-        $list = Product::where('product.status', '!=', 0)
+        $list = Product::where('product.status', '!=', 2)
             ->select('product.id', 'product.name', 'product.image', 'product.slug', 'product.description', 'product.price', 'product.pricesale')
             ->orderBy('product.created_at', 'desc')
             ->get();
-            $categories  = Category::where('status', '!=', 0)
+            $categories  = Category::where('status', '!=', 2)
             ->select('category.id', 'category.name' )
             ->get();
-            $brands  = Brand::where('status', '!=', 0)
+            $brands  = Brand::where('status', '!=', 2)
             ->select('brand.id', 'brand.name' )
             ->get();
             // // ->pluck('name', 'id');
@@ -113,11 +113,76 @@ class ProductController extends Controller
         $product->price = $request->price;
         $product->pricesale = $request->pricesale;
         $product->created_at = date('Y-m-d H:i:s');
-        $product->created_by = Auth::id() ?? 1;  
+        $product->created_by = Auth::id() ?? 1;
         $product->status = $request->status;
         $product->save();
 
         return redirect()->route('admin.product.index');
     }
 
+    public function show(string $id)
+    {
+        $product = Product::find($id);
+        if($product == null)
+        {
+            session()->flash('error', 'Dữ liệu id của danh mục không tồn tại!');
+            return view("backend.product.index");
+        }
+        $list = Product::where('product.status', '!=', 2)
+            ->select('product.id', 'product.name', 'product.image', 'product.slug', 'product.description', 'product.price', 'product.pricesale')
+            ->orderBy('product.created_at', 'desc')
+            ->get();
+        $categories  = Category::where('status', '!=', 2)
+                ->select('category.id', 'category.name' )
+                ->get();
+        $brands  = Brand::where('status', '!=', 2)
+            ->select('brand.id', 'brand.name' )
+            ->get();
+
+
+
+        return view("backend.product.show", compact("product","categories","brands"));
+    }
+
+    public function delete(Request $request, string $id)
+    {
+        $product = Product::find($id);
+        if($product==null){
+            //chuyen trang va bao loi
+        }
+
+        $product->status = 2;
+        $product->save();
+
+        return redirect()->route('admin.product.index');
+    }
+
+    public function trash()
+    {
+        $categories = Category::where('status', '!=', 2)->pluck('name', 'id');
+        $brands = Brand::where('status', '!=', 2)->pluck('name', 'id');
+        $list = Product::where('status', '=', 2)->orderBy('created_at', 'desc')->get();
+        return view("backend.product.trash", compact('categories','brands','list'));
+    }
+
+    public function restore(Request $request, string $id)
+    {
+        $product = Product::find($id);
+        if($product==null){
+            //chuyen trang va bao loi
+        }
+
+        $product->status = 0;
+        $product->save();
+
+        return redirect()->route('admin.product.trash');
+    }
+
+    public function destroy($id)
+    {
+        $product = Product::findOrFail($id);
+        $product->delete();
+
+        return redirect()->route('admin.product.trash');
+    }
 }

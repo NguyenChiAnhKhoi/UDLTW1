@@ -16,7 +16,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $list = Category::where('status', '!=', 0)->orderBy('created_at','DESC')->get();
+        $list = Category::where('status', '!=', 2)->orderBy('created_at','DESC')->get();
         $htmlparentId = "";
         $htmlsortOrder = "";
         foreach($list as $item)
@@ -52,45 +52,6 @@ class CategoryController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        $category = Category::find($id);
-        if($category == null)
-        {
-            session()->flash('error', 'Dữ liệu id của danh mục không tồn tại!');
-            return view("backend.category.index");
-        }
-        $list = Category::where('category.status', '!=', 0)
-            ->select('category.id', 'category.name', 'category.image', 'category.slug', 'category.sort_order')
-            ->orderBy('category.created_at', 'desc')
-            ->get();
-        $htmlparentId = "";
-        $htmlsortOrder = "";
-        foreach ($list as $item) {
-            if($category->parent_id == $item->id){
-                $htmlparentId .= "<option selected value='" . $item->id . "'>" . $item->name . "</option>";
-            }
-            else{
-                $htmlparentId .= "<option value='" . $item->id . "'>" . $item->name . "</option>";
-            }
-
-            if($category->sort_order-1 == $item->sort_order){
-                $htmlsortOrder .= "<option selected value='" . ($item->sort_order + 1) . "'>Sau " . $item->name . "</option>";
-            }
-            else{
-                $htmlsortOrder .= "<option value='" . ($item->sort_order + 1) . "'>Sau " . $item->name . "</option>";
-            }
-        }
-        return view("backend.category.edit", compact("category", "htmlparentId", "htmlsortOrder"));
-    }
 
     /**
      * Update the specified resource in storage.
@@ -123,8 +84,99 @@ class CategoryController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+
+
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(string $id)
     {
-        //
+        $category = Category::find($id);
+        if($category == null)
+        {
+            session()->flash('error', 'Dữ liệu id của danh mục không tồn tại!');
+            return view("backend.category.index");
+        }
+        $list = Category::where('category.status', '!=', 2)
+            ->select('category.id', 'category.name', 'category.image', 'category.slug', 'category.sort_order')
+            ->orderBy('category.created_at', 'desc')
+            ->get();
+        $htmlparentId = "";
+        $htmlsortOrder = "";
+        foreach ($list as $item) {
+            if($category->parent_id == $item->id){
+                $htmlparentId .= "<option selected value='" . $item->id . "'>" . $item->name . "</option>";
+            }
+            else{
+                $htmlparentId .= "<option value='" . $item->id . "'>" . $item->name . "</option>";
+            }
+
+            if($category->sort_order-1 == $item->sort_order){
+                $htmlsortOrder .= "<option selected value='" . ($item->sort_order + 1) . "'>Sau " . $item->name . "</option>";
+            }
+            else{
+                $htmlsortOrder .= "<option value='" . ($item->sort_order + 1) . "'>Sau " . $item->name . "</option>";
+            }
+        }
+        return view("backend.category.edit", compact("category", "htmlparentId", "htmlsortOrder"));
+    }
+
+    public function show(string $id)
+    {
+        $category = Category::find($id);
+        if($category == null)
+        {
+            session()->flash('error', 'Dữ liệu id của danh mục không tồn tại!');
+            return view("backend.category.index");
+        }
+        $list = Category::where('category.status', '!=', 2)
+            ->select('category.id', 'category.name', 'category.image', 'category.slug', 'category.description')
+            ->orderBy('category.created_at', 'desc')
+            ->get();
+        $categories  = Category::where('status', '!=', 2)
+                ->select('category.id', 'category.name' )
+                ->get();
+
+
+
+        return view("backend.category.show", compact("category","categories"));
+    }
+
+    public function delete(Request $request, string $id)
+    {
+        $category = Category::find($id);
+        if($category==null){
+            //chuyen trang va bao loi
+        }
+
+        $category->status = 2;
+        $category->save();
+
+        return redirect()->route('admin.category.index');
+    }
+    public function trash()
+    {
+        $list = Category::where('status', '=', 2)->orderBy('created_at', 'desc')->get();
+        return view("backend.category.trash", compact('list'));
+    }
+    public function restore(Request $request, string $id)
+    {
+        $category = Category::find($id);
+        if($category==null){
+            //chuyen trang va bao loi
+        }
+
+        $category->status = 0;
+        $category->save();
+
+        return redirect()->route('admin.category.trash');
+    }
+
+    public function destroy($id)
+    {
+        $category = Category::findOrFail($id);
+        $category->delete();
+
+        return redirect()->route('admin.category.trash');
     }
 }

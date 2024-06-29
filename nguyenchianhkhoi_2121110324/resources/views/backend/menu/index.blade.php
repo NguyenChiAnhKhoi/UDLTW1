@@ -15,14 +15,12 @@
         <section class="content">
             <div class="card">
                 <div class="card-header text-right">
-                    <button class="btn btn-sm btn-success">
-                        <i class="fa fa-solid fa-plus"></i>
-                        Thêm mn
-                    </button>
-                    <button class="btn btn-sm btn-success">
-                        <i class="fa fa-save" aria-hidden="true"></i>
-                        Thêm vào thùng rác
-                    </button>
+                    <a href="{{route('admin.menu.trash')}}">
+                        <button class="btn btn-sm btn-danger" >
+                            <i class="fa fa-trash text-white"   aria-hidden="true"></i>
+                                    Xem thùng rác
+                        </button>
+                    </a>
                 </div>
                 <div class="card-body">
                     <div class="row">
@@ -78,7 +76,7 @@
                                 <label>Trạng thái</label>
                                 <select name="status" class="form-control">
                                     <option value="1">Xuất bản</option>
-                                    <option value="2">Chưa xuất bản</option>
+                                    <option value="0">Chưa xuất bản</option>
                                 </select>
                             </div>
                             <div class="card-header text-right">
@@ -89,7 +87,7 @@
                             </div>
 
                         </form>
-                    </div> 
+                    </div>
                                            <div class="col-md-8">
                             <table class="table table-bordered">
             <thead>
@@ -108,7 +106,7 @@
                                             <td>
                                                 <input type="checkbox">
                                             </td>
-                                            
+
                                             <td>
                                                 <div class="name">
                                                     {{ $row->name }}

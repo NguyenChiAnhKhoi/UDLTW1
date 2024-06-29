@@ -13,15 +13,8 @@ class BannerController extends Controller
 {
     public function index()
     {
-        $list = Banner::where('banner.status','!=',0)
-        ->select('banner.id','banner.name','banner.link','banner.image')
-        ->orderBy('banner.created_at','desc')
-        ->get();
-        $htmlposition = "";
-        foreach ($list as $item){
-            $htmlposition .= "<option value='" . ($item->position+1) . "'>Sau " . $item->name . "</option>";
-        }
-        return view("backend.banner.index",compact("list","htmlposition"));   
+        $list = Banner::where('banner.status','!=',2)->orderBy('created_at','DESC')->get();
+        return view("backend.banner.index",compact("list"));
     }
 
     /**
@@ -52,13 +45,6 @@ class BannerController extends Controller
     }
 
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
 
     /**
      * Show the form for editing the specified resource.
@@ -75,7 +61,7 @@ class BannerController extends Controller
             ->select('banner.id', 'banner.name', 'banner.image', 'banner.position')
             ->orderBy('banner.created_at', 'desc')
             ->get();
-     
+
         $htmlposittion = "";
         foreach ($list as $item) {
             $itemPosition = intval($item->position);
@@ -85,7 +71,7 @@ class BannerController extends Controller
                 $htmlposittion .= "<option value='" . ($itemPosition + 1) . "'>Sau " . $item->name . "</option>";
             }
         }
-        
+
         return view("backend.banner.edit", compact("banner",  "htmlposittion"));
     }
 
@@ -117,11 +103,62 @@ class BannerController extends Controller
         return redirect()->route('admin.banner.index');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
+
+    public function show(string $id)
     {
-        //
+        $banner = Banner::find($id);
+        if($banner == null)
+        {
+            session()->flash('error', 'Dữ liệu id của danh mục không tồn tại!');
+            return view("backend.banner.index");
+        }
+        $list = Banner::where('banner.status', '!=', 2)
+            ->select('banner.id', 'banner.name', 'banner.image', 'banner.description', 'banner.position')
+            ->orderBy('banner.created_at', 'desc')
+            ->get();
+
+
+
+        return view("backend.banner.show", compact("banner","list"));
     }
+
+    public function delete(Request $request, string $id)
+    {
+        $banner = Banner::find($id);
+        if($banner==null){
+            //chuyen trang va bao loi
+        }
+
+        $banner->status = 2;
+        $banner->save();
+
+        return redirect()->route('admin.banner.index');
+    }
+    public function trash()
+    {
+        $list = Banner::where('status', '=', 2)->orderBy('created_at', 'desc')->get();
+        return view("backend.banner.trash", compact('list'));
+    }
+    public function restore(Request $request, string $id)
+    {
+        $banner = Banner::find($id);
+        if($banner==null){
+            //chuyen trang va bao loi
+        }
+
+        $banner->status = 0;
+        $banner->save();
+
+        return redirect()->route('admin.banner.trash');
+    }
+
+    public function destroy($id)
+    {
+        $banner = Banner::findOrFail($id);
+        $banner->delete();
+
+        return redirect()->route('admin.banner.trash');
+    }
+
+
 }

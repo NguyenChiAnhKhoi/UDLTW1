@@ -13,15 +13,12 @@ class BrandController extends Controller
 {
     public function index()
     {
-        $list = Brand::where('brand.status','!=',0)
-        ->select('brand.id','brand.name','brand.image','brand.slug')
-        ->orderBy('brand.created_at','desc')
-        ->get();
+        $list = Brand::where('brand.status','!=',2)->orderBy('created_at','DESC')->get();
         $htmlsortorder = "";
         foreach ($list as $item){
             $htmlsortorder .= "<option value='" . ($item->sort_order+1) . "'>Sau " . $item->name . "</option>";
         }
-        return view("backend.brand.index",compact("list","htmlsortorder"));   
+        return view("backend.brand.index",compact("list","htmlsortorder"));
     }
 
     /**
@@ -51,10 +48,6 @@ class BrandController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
-    {
-        //
-    }
 
     /**
      * Show the form for editing the specified resource.
@@ -71,10 +64,10 @@ class BrandController extends Controller
             ->select('brand.id', 'brand.name', 'brand.image', 'brand.slug', 'brand.sort_order')
             ->orderBy('brand.created_at', 'desc')
             ->get();
-     
+
         $htmlsortOrder = "";
         foreach ($list as $item) {
-          
+
 
             if($brand->sort_order-1 == $item->sort_order){
                 $htmlsortOrder .= "<option selected value='" . ($item->sort_order + 1) . "'>Sau " . $item->name . "</option>";
@@ -97,7 +90,7 @@ class BrandController extends Controller
         }
         $brand->name = $request->name;
         $brand->slug = Str::of($request->name)->slug('-');
-       
+
         $brand->sort_order = $request->sort_order;
         $brand->description = $request->description;
         $brand->created_at = date('Y-m-d H:i:s');
@@ -114,12 +107,64 @@ class BrandController extends Controller
         return redirect()->route('admin.brand.index');
     }
 
+    public function show(string $id)
+    {
+        $brand = Brand::find($id);
+        if($brand == null)
+        {
+            session()->flash('error', 'Dữ liệu id của danh mục không tồn tại!');
+            return view("backend.brand.index");
+        }
+        $list = Brand::where('brand.status', '!=', 2)
+            ->select('brand.id', 'brand.name', 'brand.image', 'brand.slug', 'brand.description')
+            ->orderBy('brand.created_at', 'desc')
+            ->get();
+
+
+
+        return view("backend.brand.show", compact("brand","list"));
+    }
+
+    public function delete(Request $request, string $id)
+    {
+        $brand = Brand::find($id);
+        if($brand==null){
+            //chuyen trang va bao loi
+        }
+
+        $brand->status = 2;
+        $brand->save();
+
+        return redirect()->route('admin.brand.index');
+    }
+    public function trash()
+    {
+        $list = Brand::where('status', '=', 2)->orderBy('created_at', 'desc')->get();
+        return view("backend.brand.trash", compact('list'));
+    }
+    public function restore(Request $request, string $id)
+    {
+        $brand = Brand::find($id);
+        if($brand==null){
+            //chuyen trang va bao loi
+        }
+
+        $brand->status = 0;
+        $brand->save();
+
+        return redirect()->route('admin.brand.trash');
+    }
+
+    public function destroy($id)
+    {
+        $brand = Brand::findOrFail($id);
+        $brand->delete();
+
+        return redirect()->route('admin.brand.trash');
+    }
+
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
-    {
-        //
-    }
 }
