@@ -30,6 +30,11 @@ Route::get('san-pham', [SanPhamController::class, 'index'])->name('site.product'
 Route::get('danh-muc/{slug}', [SanPhamController::class, 'category'])->name('site.product.category');
 //product detail
 Route::get('chi-tiet-san-pham/{slug}', [SanPhamController::class, 'detail'])->name('site.product.detail');
+//product load
+Route::get('/load-more-products', [SanPhamController::class, 'loadMoreProducts'])->name('products.loadmore');
+
+
+
 
 //cart
 Route::get('gio-hang', [CartController::class, 'index'])->name('site.cart.index');

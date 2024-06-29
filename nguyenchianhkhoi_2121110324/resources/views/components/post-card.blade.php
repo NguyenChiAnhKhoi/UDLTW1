@@ -1,11 +1,16 @@
-<div class="card-header post-img position-relative overflow-hidden bg-transparent border p-0">
-    <a href="{{route('site.post.detail', ['slug'=> $post->slug]) }}">
-    <img class="img-fluid w-100" src="{{ asset('images/posts/'.$post->image)}}" alt="{{$post->image}}">
-    </a>
-</div>
-<div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
-    <h6 class="text-truncate mb-3"><a href="{{route('site.post.detail', ['slug'=> $post->slug]) }}">{{ $post->title }}</a></h6>
-    <div class="d-flex justify-content-center">
-
+<div class="card">
+    <img src="{{ asset('images/posts/'.$post->image)}}" class="card-img-top" alt="Post Image">
+    <div class="card-body">
+        <h5 class="card-title"><a href="{{route('site.post.detail', ['slug'=> $post->slug]) }}">{{ $post->title }}</a></h5>
+        <p class="card-text">{{ $post->detail }}</p>
+        <p><a class="btn btn-secondary" href="{{route('site.post.detail', ['slug'=> $post->slug]) }}" role="button">Xem bài viết »</a></p>
     </div>
 </div>
+
+{{-- <div class="col-lg-4 text-center">
+    <a href="{{route('site.post.detail', ['slug'=> $post->slug]) }}">
+    <img class="rounded-circle" src="{{ asset('images/posts/'.$post->image)}}" alt="{{$post->image}}" width="140" height="140">
+    <h2><a href="{{route('site.post.detail', ['slug'=> $post->slug]) }}">{{ $post->title }}</a></h2>
+    <p>{{$post->detail}}</p>
+    <p><a class="btn btn-secondary" href="{{route('site.post.detail', ['slug'=> $post->slug]) }}" role="button">Xem bài viết »</a></p>
+  </div> --}}

@@ -19,7 +19,7 @@
     {{-- <link rel="stylesheet" href="{{ asset('css/bootstrap.css') }}"> --}}
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
     <script src="{{ asset('jquery/jquery-3.7.1.min.js') }}"></script>
-    <script src="{{ asset('js/bootstrap.min.js') }}"></script>
+    {{-- <script src="{{ asset('js/bootstrap.min.js') }}"></script> --}}
 </head>
 <body>
 {{-- Header --}}

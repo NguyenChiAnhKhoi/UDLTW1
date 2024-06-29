@@ -1,6 +1,6 @@
 <div class="section_product_new my-5">
     <div class="container">
-        <h1 class="text-success text-uppercase mb-4">Sản phẩm mới</h1>
+        <h1 class="text-success text-uppercase text-center mb-4">Sản phẩm mới</h1>
         <div class="row">
             @foreach($product_new as $product_item)
             <div class="col-md">

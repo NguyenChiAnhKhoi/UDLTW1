@@ -1,7 +1,7 @@
 @extends('layouts.site')
 @section('title', 'footer')
 @section('footer')
-<footer class="footer bg-gray">
+<footer class="footer bg-danger">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-lg-3 col-md-6 col-sm-6">

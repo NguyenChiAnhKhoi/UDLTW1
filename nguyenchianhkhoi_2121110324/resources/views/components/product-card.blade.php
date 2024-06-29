@@ -13,4 +13,8 @@
         <h6>{{ number_format($product->price)}}</h6>
         @endif
     </div>
+    <div class="d-flex justify-content-between align-items-center pb-2 mb-1">
+        <a href="#!" class="text-dark fw-bold">Cancel</a>
+        <button  type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary">Buy now</button>
+      </div>
 </div>

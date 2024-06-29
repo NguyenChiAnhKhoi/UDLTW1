@@ -3,9 +3,12 @@
 @section('content')
 <main>
 	<x-slider/>
-    <x-features/>
+    {{-- <x-features/> --}}
     <x-flash-sale/>
     <x-product-new/>
+    <x-home-post/>
 </main>
+
+
 
 @endsection

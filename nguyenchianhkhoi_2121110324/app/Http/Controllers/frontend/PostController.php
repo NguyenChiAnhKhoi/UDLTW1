@@ -12,7 +12,7 @@ class PostController extends Controller
 {
     public function index()
     {
-    $list_post = Post::where([['status', '=', 1], ['type','=','post']])
+    $list_post = Post::where([['status', '=', 1]])
     ->orderBy('created_at','desc')
     ->paginate(9);
     return view("frontend.post", compact('list_post'));
