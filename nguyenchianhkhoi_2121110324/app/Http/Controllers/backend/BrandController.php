@@ -21,6 +21,7 @@ class BrandController extends Controller
         return view("backend.brand.index",compact("list","htmlsortorder"));
     }
 
+
     /**
      * Store a newly created resource in storage.
      */
@@ -161,6 +162,15 @@ class BrandController extends Controller
         $brand->delete();
 
         return redirect()->route('admin.brand.trash');
+    }
+    public function create()
+    {
+        $list = Brand::where('brand.status','!=',2)->orderBy('created_at','DESC')->get();
+        $htmlsortorder = "";
+        foreach ($list as $item){
+            $htmlsortorder .= "<option value='" . ($item->sort_order+1) . "'>Sau " . $item->name . "</option>";
+        }
+        return view("backend.brand.create", compact("htmlsortorder"));
     }
 
 

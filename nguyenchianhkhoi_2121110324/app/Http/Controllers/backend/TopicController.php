@@ -150,4 +150,16 @@ class TopicController extends Controller
         return redirect()->route('admin.topic.trash');
     }
 
+    public function create()
+    {
+        $list=Topic::where('status','!=',2)->orderBy('created_at','desc')->get();
+        $htmlparentid="";
+        $htmlsortorder="";
+        foreach($list as $item){
+            $htmlparentid .="<option value='".$item->id."'>".$item->name."</option>";
+            $htmlsortorder .="<option value='".($item->sort_order+1)."'>Sau ".$item->name."</option>";
+        }
+        return view("backend.topic.create",compact("list","htmlparentid","htmlsortorder"));
+    }
+
 }

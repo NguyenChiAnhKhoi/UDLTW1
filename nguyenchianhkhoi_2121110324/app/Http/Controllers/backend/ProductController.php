@@ -21,6 +21,8 @@ class ProductController extends Controller
         $list = Product::where('status', '!=', 2)->orderBy('created_at', 'desc')->get();
         return view("backend.product.index", compact('categories','brands','list'));
     }
+
+
      /* them */
     public function store(StoreProductRequest $request)
     {
@@ -184,5 +186,12 @@ class ProductController extends Controller
         $product->delete();
 
         return redirect()->route('admin.product.trash');
+    }
+    public function create()
+    {
+        $categories = Category::where('status', '!=', 2)->pluck('name', 'id');
+        $brands = Brand::where('status', '!=', 2)->pluck('name', 'id');
+        $list = Product::where('status', '!=', 2)->orderBy('created_at', 'desc')->get();
+        return view("backend.product.create", compact('categories','brands','list'));
     }
 }

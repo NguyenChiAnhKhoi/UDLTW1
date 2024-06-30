@@ -17,6 +17,7 @@ class BannerController extends Controller
         return view("backend.banner.index",compact("list"));
     }
 
+
     /**
      * Store a newly created resource in storage.
      */
@@ -159,6 +160,9 @@ class BannerController extends Controller
 
         return redirect()->route('admin.banner.trash');
     }
-
+    public function create()
+    {
+        return view("backend.banner.create");
+    }
 
 }

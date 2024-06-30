@@ -16,58 +16,23 @@
         <section class="content">
             <div class="card">
                 <div class="card-header text-right">
+                    <a href="{{route('admin.banner.create')}}">
+                        <button class="btn btn-sm btn-success" >
+                            <i class="fa fa-plus text-white"   aria-hidden="true"></i>
+                                    Thêm
+                        </button>
+                    </a>
                     <a href="{{route('admin.banner.trash')}}">
                         <button class="btn btn-sm btn-danger" >
                             <i class="fa fa-trash text-white"   aria-hidden="true"></i>
                                     Xem thùng rác
                         </button>
                     </a>
+
                 </div>
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-md-3">
-                        <form action="{{ route('admin.banner.store') }}" method="post" enctype="multipart/form-data">
-                                @csrf
-                                <div class="mb-3">
-                                    <label for="name">Tên Banner</label>
-                                    {{-- old là giữ lại giá trị đó nếu 1 trong cái khác trong bài bị lỗi thì nó sẽ load lại form này, old giúp giữ lại giá trị để khỏi cần nhập lại --}}
-                                    <input type="text" value="{{ old('name') }}" name="name" id="name" class="form-control">
-                                    @error('name')
-                                        {{ $message }}
-                                    @enderror
-                                </div>
-                                <div class="mb-3">
-                                    <label for="description">Mô tả</label>
-                                    <textarea name="description" id="description" rows="3" class="form-control">{{ old('description') }}</textarea>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="link">Link</label>
-                                    <textarea name="link" id="link" rows="3" class="form-control">{{ old('link') }}</textarea>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="position">Vị trí</label>
-                                    <select name="position" id="position" class="form-control">
-                                    <option value="slider-main">Slider Main</option>
-                                    <option value="slider-show">Slider Show</option>
-                                    </select>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="image">Hình ảnh</label>
-                                    <input type="file" name="image" id="image" class="form-control">
-                                </div>
-                                <div class="mb-3">
-                                    <label for="status">Trạng thái</label>
-                                    <select name="status" id="status" class="form-control">
-                                        <option value="0">Chưa xuất bản</option>
-                                        <option value="1">Xuất bản</option>
-                                    </select>
-                                </div>
-                                <div class="mb-3">
-                                    <button type="submit" class="btn btn-success">Thêm Banner</button>
-                                </div>
-                            </form>
-                        </div>
-                        <div class="col-md-9">
+                        <div class="col-md">
                             <table class="table table-bordered">
                                 <thead>
                                     <tr>

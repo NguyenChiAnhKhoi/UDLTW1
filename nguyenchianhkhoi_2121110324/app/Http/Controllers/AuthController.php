@@ -25,7 +25,7 @@ class AuthController extends Controller
         }
 
         if(Auth::attempt($credentials)){
-            return redirect()->route('site.home');
+            return redirect()->route('admin.dashboard.index');
         }
         else{
             return redirect()->route('website.getlogin')->with("message","Đăng nhập không thành công");

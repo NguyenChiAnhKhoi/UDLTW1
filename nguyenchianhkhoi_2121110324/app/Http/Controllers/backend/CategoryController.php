@@ -27,6 +27,9 @@ class CategoryController extends Controller
         return view("backend.category.index", compact('list','htmlparentId','htmlsortOrder'));
 
     }
+
+
+
     public function store(StoreCategoryRequest $request)
     {
         $category = new Category();
@@ -178,5 +181,17 @@ class CategoryController extends Controller
         $category->delete();
 
         return redirect()->route('admin.category.trash');
+    }
+    public function create()
+    {
+        $list = Category::where('category.status','!=',2)->orderBy('created_at','DESC')->get();
+        $htmlparentId = "";
+        $htmlsortOrder = "";
+        foreach($list as $item)
+        {
+            $htmlparentId .= "<option value='".$item->id."'>".$item->name."</option>";
+            $htmlsortOrder .="<option value='" . $item->sort_order +1 . "'>" . $item->name . "</option>";
+        }
+        return view("backend.category.create", compact('list','htmlparentId','htmlsortOrder'));
     }
 }

@@ -6,11 +6,8 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-12 row">
-                        <h1 class="d-inline col-md-10">Tất cả Banner</h1>
-                        <div class="col-md-2 text-right">
-                            <a href="#" class="text-danger"><i class="fa fa-trash"
-                                    aria-hidden="true"></i><sup>0</sup></a>
-                        </div>
+                        <h1 class="d-inline col-md-10">Thêm Banner</h1>
+
                     </div>
                 </div>
             </div>
@@ -24,43 +21,34 @@
                             Quay về danh sách
                         </button>
                     </a>
-
                 </div>
-                <div class="card-body">
-                    @php
-                        $args = ['id' => $banner->id];
-                    @endphp
-                    <div class="row">
-                        <div class="col-md-3">
-                            <form action="{{ route('admin.banner.update', $args) }}"enctype="multipart/form-data"
-                                method="post">
-                                @csrf
-                                @method('PUT')
 
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md">
+                        <form action="{{ route('admin.banner.store') }}" method="post" enctype="multipart/form-data">
+                                @csrf
                                 <div class="mb-3">
                                     <label for="name">Tên Banner</label>
                                     {{-- old là giữ lại giá trị đó nếu 1 trong cái khác trong bài bị lỗi thì nó sẽ load lại form này, old giúp giữ lại giá trị để khỏi cần nhập lại --}}
-                                    <input type="text" value="{{ old('name', $banner->name) }}" name="name"
-                                        id="name" class="form-control">
+                                    <input type="text" value="{{ old('name') }}" name="name" id="name" class="form-control">
                                     @error('name')
                                         {{ $message }}
                                     @enderror
                                 </div>
                                 <div class="mb-3">
                                     <label for="description">Mô tả</label>
-                                    <textarea rows="3" name="description" id="description" placeholder="Nhập mô tả " class="form-control">{{ old('description', $banner->description) }}</textarea>
+                                    <textarea name="description" id="description" rows="3" class="form-control">{{ old('description') }}</textarea>
                                 </div>
                                 <div class="mb-3">
                                     <label for="link">Link</label>
-                                    <textarea name="link" id="link" rows="3" class="form-control">{{ old('link', $banner->link) }}</textarea>
+                                    <textarea name="link" id="link" rows="3" class="form-control">{{ old('link') }}</textarea>
                                 </div>
                                 <div class="mb-3">
-                                    <label for="position">Sắp xếp</label>
+                                    <label for="position">Vị trí</label>
                                     <select name="position" id="position" class="form-control">
-                                        <option value="slider-main" {{ $banner->position == 'slider-main' ? 'selected' : '' }}>
-                                            Slider Main</option>
-                                        <option value="slider-show" {{ $banner->position == 'slider-show' ? 'selected' : '' }}>
-                                            Slider Show</option>
+                                    <option value="slider-main">Slider Main</option>
+                                    <option value="slider-show">Slider Show</option>
                                     </select>
                                 </div>
                                 <div class="mb-3">
@@ -68,11 +56,10 @@
                                     <input type="file" name="image" id="image" class="form-control">
                                 </div>
                                 <div class="mb-3">
-                                    <label>Trạng thái</label>
-                                    <select name="status" class="form-control">
-                                        <option value="0" {{ $banner->status == 0 ? 'selected' : '' }}>Chưa xuất bản
-                                        </option>
-                                        <option value="1" {{ $banner->status == 1 ? 'selected' : '' }}>Xuất bản</option>
+                                    <label for="status">Trạng thái</label>
+                                    <select name="status" id="status" class="form-control">
+                                        <option value="0">Chưa xuất bản</option>
+                                        <option value="1">Xuất bản</option>
                                     </select>
                                 </div>
                                 <div class="mb-3">
@@ -80,7 +67,6 @@
                                 </div>
                             </form>
                         </div>
-
                     </div>
                 </div>
             </div>
@@ -88,3 +74,4 @@
     </div>
 
 @endsection
+

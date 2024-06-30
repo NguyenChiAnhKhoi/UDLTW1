@@ -84,7 +84,7 @@
                         <div class="mb-3">
                             <label>Trạng thái</label>
                             <select name="status" class="form-control">
-                                <option value="2" {{ $product->status == 2 ? 'selected' : '' }}>Chưa xuất bản</option>
+                                <option value="0" {{ $product->status == 0 ? 'selected' : '' }}>Chưa xuất bản</option>
                                 <option value="1" {{ $product->status == 1 ? 'selected' : '' }}>Xuất bản</option>
                             </select>
                         </div>

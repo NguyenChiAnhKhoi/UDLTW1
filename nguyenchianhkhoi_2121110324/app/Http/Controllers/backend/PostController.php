@@ -174,4 +174,11 @@ class PostController extends Controller
 
         return redirect()->route('admin.post.trash');
     }
+    public function create()
+    {
+        $list = Post::where('status', '!=', 2)->orderBy('created_at', 'desc')->get();
+        $topics = Topic::where('status', '!=', 2)->pluck('name', 'id');
+        return view("backend.post.create", compact('list','topics'));
+    }
+
 }

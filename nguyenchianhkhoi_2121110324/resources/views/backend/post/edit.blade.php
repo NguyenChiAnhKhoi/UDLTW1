@@ -50,7 +50,7 @@
 
                         <div class="mb-3">
                             <label>Chi tiết (*)</label>
-                            <textarea rows="3" name="detail" id="detail" placeholder="Nhập chi tiết sản phẩm" class="form-control">{{ old('detail', $post->detail) }}</textarea>
+                            <textarea  name="detail" id="detail" placeholder="Nhập chi tiết bài viết" class="form-control">{{ old('detail', $post->detail) }}</textarea>
                         </div>
 
                         <div class="mb-3">
@@ -59,7 +59,7 @@
                         </div>
                         <div class="mb-3">
                             <label>Mô tả (*)</label>
-                            <textarea rows="3" name="description" id="description" placeholder="Nhập mô tả danh mục" class="form-control">{{ old('description', $post->description) }}</textarea>
+                            <textarea rows="3" name="description" id="description" placeholder="Nhập mô tả bài viết" class="form-control">{{ old('description', $post->description) }}</textarea>
                         </div>
                         <div class="mb-3">
                             <label>Định dạng</label>

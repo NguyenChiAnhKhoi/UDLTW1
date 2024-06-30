@@ -60,8 +60,15 @@
                                 <textarea rows="3" name="link" id="link" placeholder="Nhập link" class="form-control">{{ old('link',$menu->link) }}</textarea>
                             </div>
                             <div class="mb-3">
-                                <label>type (*)</label>
-                                <textarea rows="1"  name="type" id="type" placeholder="Type" class="form-control">{{ old('type',$menu->type) }}</textarea>
+                                <label>Loại</label>
+                                <select name="type" class="form-control">
+                                    <option value="category" {{($menu->type=='category')?'selected':''}}>Danh mục</option>
+                                    <option value="brand" {{($menu->type=='brand')?'selected':''}}>Thương hiệu</option>
+                                    <option value="topic" {{($menu->type=='topic')?'selected':''}}>Chủ đề</option>
+                                    <option value="page" {{($menu->type=='page')?'selected':''}}>Trang</option>
+                                    <option value="post" {{($menu->type=='post')?'selected':''}}>Bài viết</option>
+
+                                </select>
                             </div>
                             <div class="mb-3">
                                 <label>Table Id (*)</label>
@@ -81,15 +88,15 @@
                             <div class="mb-3">
                                 <label>Vị trí</label>
                                 <select name="position" class="form-control">
-                                    <option value="mainmenu">Main menu</option>
-                                    <option value="footermenu">Footer menu</option>
+                                    <option value="mainmenu" {{($menu->position=='mainmenu')?'selected':''}}>Main menu</option>
+                                    <option value="footermenu" {{($menu->position=='footermenu')?'selected':''}}>Footer menu</option>
                                 </select>
                             </div>
                             <div class="mb-3">
                                 <label>Trạng thái</label>
                                 <select name="status" class="form-control">
-                                    <option value="1">Xuất bản</option>
-                                    <option value="0">Chưa xuất bản</option>
+                                    <option value="0" {{($menu->status==0)?'selected':''}}>Chưa xuất bản</option>
+                                    <option value="1" {{($menu->status==1)?'selected':''}}>Xuất bản</option>
                                 </select>
                             </div>
                             <div class="card-header text-right">

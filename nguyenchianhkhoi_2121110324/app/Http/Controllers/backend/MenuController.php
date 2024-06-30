@@ -13,17 +13,17 @@ class MenuController extends Controller
 {
     public function index()
     {
-        // $users = User::where('status', '!=', 0)->pluck('name', 'id');
-        $list = Menu::where('status', '!=', 0)->orderBy('created_at', 'desc')->get();
+        $list = Menu::where('status', '!=', 2)->orderBy('created_at', 'desc')->get();
         $htmlparentId = "";
         $htmlsortOrder = "";
         foreach($list as $item)
         {
             $htmlparentId .= "<option value='".$item->id."'>".$item->name."</option>";
-            $htmlsortOrder .="<option value='" . $item->sort_order +1 . "'>" . $item->name . "</option>";        
+            $htmlsortOrder .="<option value='" . $item->sort_order +1 . "'>" . $item->name . "</option>";
         }
         return view("backend.menu.index", compact('list','htmlparentId','htmlsortOrder'));
     }
+
     //Store
     public function store(StoreMenuRequest $request)
 {
@@ -53,7 +53,7 @@ public function edit(string $id)
             session()->flash('error', 'Dữ liệu id của danh mục không tồn tại!');
             return view("backend.menu.index");
         }
-        $list = Menu::where('menu.status', '!=', 0)
+        $list = Menu::where('menu.status', '!=', 2)
             ->select('menu.id', 'menu.name', 'menu.sort_order', 'menu.position', 'menu.link', 'menu.type')
             ->orderBy('menu.created_at', 'desc')
             ->get();
@@ -66,7 +66,7 @@ public function edit(string $id)
                 else{
                     $htmlparentId .= "<option value='" . $item->id . "'>" . $item->name . "</option>";
                 }
-    
+
                 if($menu->sort_order-1 == $item->sort_order){
                     $htmlsortOrder .= "<option selected value='" . ($item->sort_order + 1) . "'>Sau " . $item->name . "</option>";
                 }
@@ -98,5 +98,76 @@ public function edit(string $id)
     $menu->save();
 
     return redirect()->route('admin.menu.index');
+    }
+
+    public function show(string $id)
+    {
+        $menu = Menu::find($id);
+        if($menu == null)
+        {
+            session()->flash('error', 'Dữ liệu id của danh mục không tồn tại!');
+            return view("backend.menu.index");
+        }
+        $list = Menu::where('menu.status', '!=', 2)
+            ->select('menu.id', 'menu.name', 'menu.link', 'menu.position', 'menu.table_id')
+            ->orderBy('menu.created_at', 'desc')
+            ->get();
+        $menus  = Menu::where('status', '!=', 2)
+                ->select('menu.id', 'menu.name' )
+                ->get();
+
+
+
+        return view("backend.menu.show", compact("menu","menus"));
+    }
+
+    public function delete(Request $request, string $id)
+    {
+        $menu = Menu::find($id);
+        if($menu==null){
+            //chuyen trang va bao loi
+        }
+
+        $menu->status = 2;
+        $menu->save();
+
+        return redirect()->route('admin.menu.index');
+    }
+    public function trash()
+    {
+        $list = Menu::where('status', '=', 2)->orderBy('created_at', 'desc')->get();
+        return view("backend.menu.trash", compact('list'));
+    }
+    public function restore(Request $request, string $id)
+    {
+        $menu = Menu::find($id);
+        if($menu==null){
+            //chuyen trang va bao loi
+        }
+
+        $menu->status = 0;
+        $menu->save();
+
+        return redirect()->route('admin.menu.trash');
+    }
+
+    public function destroy($id)
+    {
+        $menu = Menu::findOrFail($id);
+        $menu->delete();
+
+        return redirect()->route('admin.menu.trash');
+    }
+    public function create()
+    {
+        $list = Menu::where('menu.status','!=',2)->orderBy('created_at','DESC')->get();
+        $htmlparentId = "";
+        $htmlsortOrder = "";
+        foreach($list as $item)
+        {
+            $htmlparentId .= "<option value='".$item->id."'>".$item->name."</option>";
+            $htmlsortOrder .="<option value='" . $item->sort_order +1 . "'>" . $item->name . "</option>";
+        }
+        return view("backend.menu.create", compact('list','htmlparentId','htmlsortOrder'));
     }
 }
